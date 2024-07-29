@@ -22,3 +22,4 @@ __pycache__
 /sourcecode/GAN/checkpoints/**/*.png
 /sourcecode/GAN/examples/**
 **.amlignore*
+!gen_00430000.pt
