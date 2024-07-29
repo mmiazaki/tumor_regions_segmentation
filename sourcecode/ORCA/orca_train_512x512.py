@@ -19,6 +19,7 @@ def train_model_with_validation(dataloaders,
                                 model=None,
                                 patch_size=(512, 512),
                                 n_epochs=1,
+                                start_epoch=1,
                                 batch_size=1,
                                 use_cuda=True,
                                 output_dir="../../models",
@@ -49,7 +50,7 @@ def train_model_with_validation(dataloaders,
 
     since = time.time()
     qtd_images = 0
-    start_epoch = 2
+
     for epoch in range(start_epoch, n_epochs + 1):
 
         time_elapsed = time.time() - since
@@ -101,7 +102,10 @@ def train_model_with_validation(dataloaders,
 
                     torch.cuda.empty_cache()
 
-                    preds = torch.zeros(output.size(), dtype=torch.double).cuda()
+                    if use_cuda:
+                        preds = torch.zeros(output.size(), dtype=torch.double).cuda()
+                    else:
+                        preds = torch.zeros(output.size(), dtype=torch.double)
                     preds[output >= 0.5] = 1.0
 
                     # statistics
@@ -110,6 +114,9 @@ def train_model_with_validation(dataloaders,
                     running_accuracy += acc
 
                     qtd_images = (batch_idx + 1) * len(data) if phase == 'train' else qtd_images
+
+#                    if batch_idx == 0:
+#                        break
 
             epoch_loss[phase] = running_loss / len(dataloaders[phase].dataset)
             epoch_acc[phase] = running_accuracy / len(dataloaders[phase].dataset)
@@ -169,14 +176,19 @@ if __name__ == '__main__':
 
     dataset_dir = "../../datasets/ORCA_512x512"
     model_dir = "../../models"
+    result_file_csv = "../../datasets/ORCA_512x512/training/orca_training_accuracy_loss_all.csv"
     
     augmentation_strategy = "random" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
     augmentation = [None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
+    use_cuda = False
+    start_epoch = 1
+    n_epochs = 400
     batch_size = 1
     patch_size = (512, 512)
     color_model = "LAB"
+
     dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_size[1]),
                                     batch_size=batch_size,
                                     shuffle=False,
@@ -186,22 +198,24 @@ if __name__ == '__main__':
                                     color_model=color_model,
                                     augmentation=augmentation,
                                     augmentation_strategy=augmentation_strategy,
-                                    start_epoch=2,
-                                    validation_split=0.0)
+                                    start_epoch=start_epoch,
+                                    validation_split=0.0,
+                                    use_cuda=use_cuda)
 
     # loads our u-net based model to continue previous training
-    trained_model_version = "ORCA_512x512__Size-512x512_Epoch-001_Images-100_Batch-1__no_augmentation"
-    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
-    model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
+#    trained_model_version = "ORCA_512x512__Size-512x512_Epoch-001_Images-100_Batch-1__no_augmentation"
+#    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
+#    model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
     # starts the training from scratch
-    # model = None
+    model = None
 
     # train the model
-    result_file_csv = "../../datasets/ORCA_512x512/training/orca_training_accuracy_loss_all.csv"
     train_model_with_validation(dataloaders=dataloaders,
                                 model=model,
-                                n_epochs=400,
+                                n_epochs=n_epochs,
+                                start_epoch=start_epoch,
+                                use_cuda=use_cuda,
                                 augmentation_strategy=augmentation_strategy,
                                 output_dir=model_dir,
                                 augmentation_operations=augmentation,

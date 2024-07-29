@@ -32,7 +32,7 @@ def is_valid_file(filename, extensions=('.jpg', '.bmp', '.tif', '.png')):
     return str(filename).lower().endswith(extensions)
 
 
-def data_augmentation(input_image, target_img, output_mask, img_input_size=(640, 640), img_output_size=(640, 640), aug=None, GAN_model=None):
+def data_augmentation(input_image, target_img, output_mask, img_input_size=(640, 640), img_output_size=(640, 640), aug=None, GAN_model=None, use_cuda=True):
 
     image = TF.resize(input_image, size=img_output_size)
     target_image = TF.resize(target_img, size=img_output_size) if target_img is not None else None
@@ -130,7 +130,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
             bboxes = random_bbox(config, batch_size=inpainting_img.size(0))
             inpainting_img, inpainting_mask = mask_image(inpainting_img, bboxes, config)
 
-            if torch.cuda.is_available():
+            if use_cuda and torch.cuda.is_available():
                 GAN_model = nn.parallel.DataParallel(GAN_model)
                 inpainting_img = inpainting_img.cuda()
                 inpainting_mask = inpainting_mask.cuda()

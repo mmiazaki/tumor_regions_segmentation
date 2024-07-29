@@ -1,7 +1,15 @@
 import math
-
 import cv2
-import openslide
+
+import os
+if hasattr(os, 'add_dll_directory'):
+    # Windows
+    OPENSLIDE_PATH = r'C:\\openslide\\bin'
+    with os.add_dll_directory(OPENSLIDE_PATH):
+        import openslide
+else:
+    import openslide
+
 import numpy as np
 import skimage.io as sk_io
 import skimage.color as sk_color
