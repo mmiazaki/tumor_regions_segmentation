@@ -16,4 +16,4 @@ if __name__ == '__main__':
 
     for fname in filename:
         print('Ploting: '+fname)
-        plot_graph(dir+fname+'.csv', dir+fname+'.png', False, False)
+        plot_graph(dir+fname+'.csv', dir+fname+'.png', False, False, 'FCN Training - RCAug - '+fname[4:])

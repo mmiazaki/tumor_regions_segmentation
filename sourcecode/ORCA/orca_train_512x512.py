@@ -29,7 +29,7 @@ def train_model_with_validation(dataloaders,
 
     # Checking for GPU availability
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if use_cuda else "cpu"
-    logger.info('Runing on: {} | GPU available? {}'.format(device, torch.cuda.is_available()))
+    logger.info('Running on: {} | GPU available? {}'.format(device, torch.cuda.is_available()))
     filename = None
 
     torch.cuda.empty_cache()

@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_graph(csv_filename, fig_filename, legend=False, show=False):
+def plot_graph(csv_filename, fig_filename, legend=False, show=False, title='FCN Training - RCAug'):
     xdata1 = []
     ydata1 = []
     ydata2 = []
@@ -42,7 +42,7 @@ def plot_graph(csv_filename, fig_filename, legend=False, show=False):
 
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy/Loss')
-    plt.title('FCN Training - RCAug')
+    plt.title(title)
     plt.grid()
     if legend:
         plt.legend(loc="lower left", bbox_to_anchor=(0.66, 0.43))
