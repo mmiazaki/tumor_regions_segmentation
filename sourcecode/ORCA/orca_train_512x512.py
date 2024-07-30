@@ -41,6 +41,14 @@ def train_model_with_validation(dataloaders,
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'transformations'])
 
+# 1    criterion = nn.BCELoss().to(device)
+# 2    criterion = nn.L1Loss().to(device)
+# 3    criterion = nn.MSELoss().to(device)
+# 4    criterion = nn.PoissonNLLLoss().to(device)
+# 5    criterion = nn.HuberLoss().to(device)
+# 6    criterion = nn.SmoothL1Loss().to(device)
+# 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
+# 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
     criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
@@ -65,6 +73,10 @@ def train_model_with_validation(dataloaders,
         # Each epoch has a training and validation phase
         epoch_loss = {}
         epoch_acc = {}
+        epoch_tp = {}
+        epoch_tn = {}
+        epoch_fp = {}
+        epoch_fn = {}
         for phase in ['train', 'test']:
 
             model.train()
@@ -75,6 +87,10 @@ def train_model_with_validation(dataloaders,
 
             running_loss = 0.0
             running_accuracy = 0
+            running_tp = 0
+            running_tn = 0
+            running_fp = 0
+            running_fn = 0
             for batch_idx, (data, target, fname, original_size) in enumerate(dataloaders[phase]):
 
                 logger.info("\tfname: '{}' {}".format(fname[0], (batch_idx + 1)))
@@ -116,6 +132,10 @@ def train_model_with_validation(dataloaders,
                     acc = torch.sum(preds == target.data).detach().cpu().numpy() / (data.size(0)*data.size(-1)*data.size(-2))
                     running_loss += loss.item() * data.size(0)
                     running_accuracy += acc
+                    running_tp += tp
+                    running_tn += tn
+                    running_fp += fp
+                    running_fn += fn
 
                     qtd_images = (batch_idx + 1) * len(data) if phase == 'train' else qtd_images
 
@@ -124,6 +144,10 @@ def train_model_with_validation(dataloaders,
 
             epoch_loss[phase] = running_loss / len(dataloaders[phase].dataset)
             epoch_acc[phase] = running_accuracy / len(dataloaders[phase].dataset)
+            epoch_tp[phase] = running_tp
+            epoch_tn[phase] = running_tn
+            epoch_fp[phase] = running_fp
+            epoch_fn[phase] = running_fn
 
         # save the model - each epoch
         if (epoch % 10 == 0):
@@ -140,7 +164,7 @@ def train_model_with_validation(dataloaders,
             csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for phase in ['train', 'test']:
                 print('[{}] Loss: {:.6f}'.format(phase, epoch_loss[phase]))
-                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], tp, tn, fp, fn, datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
+                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], epoch_tp[phase], epoch_tn[phase], epoch_fp[phase], epoch_fn[phase], datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
 
     time_elapsed = time.time() - since
     logger.info('-' * 20)
@@ -186,7 +210,7 @@ if __name__ == '__main__':
     augmentation = [None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
-    use_cuda = False
+    use_cuda = True
     start_epoch = 1
     n_epochs = 400
     batch_size = 1
