@@ -39,7 +39,7 @@ def train_model_with_validation(dataloaders,
     augmentation = augmentation_strategy if augmentation_strategy in ["no_augmentation", "color_augmentation", "inpainting_augmentation"] else "{}_{}_operations".format(augmentation_strategy, len(augmentation_operations)-1)
     with open(result_file_csv, mode='a+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'date', 'transformations'])
+        csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'transformations'])
 
     criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
@@ -109,6 +109,10 @@ def train_model_with_validation(dataloaders,
                     preds[output >= 0.5] = 1.0
 
                     # statistics
+                    tp = torch.sum(torch.logical_and(target.data == 1, target.data == preds)).detach().cpu().numpy()
+                    tn = torch.sum(torch.logical_and(target.data == 0, target.data == preds)).detach().cpu().numpy()
+                    fp = torch.sum(torch.logical_and(target.data == 1, target.data != preds)).detach().cpu().numpy()
+                    fn = torch.sum(torch.logical_and(target.data == 0, target.data != preds)).detach().cpu().numpy()
                     acc = torch.sum(preds == target.data).detach().cpu().numpy() / (data.size(0)*data.size(-1)*data.size(-2))
                     running_loss += loss.item() * data.size(0)
                     running_accuracy += acc
@@ -123,7 +127,7 @@ def train_model_with_validation(dataloaders,
 
         # save the model - each epoch
         if (epoch % 10 == 0):
-            filename = save_model(output_dir, model, patch_size, epoch, qtd_images , batch_size, augmentation, optimizer, loss)
+            filename = save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation, optimizer, loss)
 
         if epoch_loss[phase] < best_loss:
             best_loss = epoch_loss[phase]
@@ -136,7 +140,7 @@ def train_model_with_validation(dataloaders,
             csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for phase in ['train', 'test']:
                 print('[{}] Loss: {:.6f}'.format(phase, epoch_loss[phase]))
-                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
+                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], tp, tn, fp, fn, datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
 
     time_elapsed = time.time() - since
     logger.info('-' * 20)
