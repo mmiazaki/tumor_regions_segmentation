@@ -1,0 +1,3 @@
+2024-07-24 23:58:26,995 :: INFO train_model_with_validation :: 800m 59s
+2024-07-24 23:58:26,995 :: INFO train_model_with_validation :: Best accuracy: 0.8710052490234375
+2024-07-24 23:58:26,995 :: INFO save_model :: Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_all.pth'

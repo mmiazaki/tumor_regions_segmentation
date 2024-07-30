@@ -1,0 +1,12 @@
+A 1ª Execução rodou até a Epoch 389 e travou na 390 incompleta. A 2ª Execução foi iniciada a partir da Epoch 381.
+
+
+>> 1ª Execução:
+Epochs 1-389: 774m 18s (travou)
+Epochs 1-380: 756m 28s (considerando até 380 para emendar na outra execução)
+
+>> 2ª Execução:
+Epochs 381-400: 42m 5s
+
+>> Total das execuções juntando tudo:
+798m 33s = 13h 18m 33s

@@ -1,0 +1,10 @@
+2024-07-28 15:04:31,635 :: INFO train_model_with_validation :: --------------------
+INFO:sourcecode.logger_utils:--------------------
+2024-07-28 15:04:31,635 :: INFO train_model_with_validation :: 800m 17s
+INFO:sourcecode.logger_utils:800m 17s
+2024-07-28 15:04:31,635 :: INFO train_model_with_validation :: Best accuracy: 0.8708291244506836
+INFO:sourcecode.logger_utils:Best accuracy: 0.8708291244506836
+2024-07-28 15:04:31,635 :: INFO save_model :: Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_all.pth'
+INFO:sourcecode.logger_utils:Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_all.pth'
+[train] Loss: 0.085044
+[test] Loss: 0.144906

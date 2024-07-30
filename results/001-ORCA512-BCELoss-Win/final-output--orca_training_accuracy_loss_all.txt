@@ -1,0 +1,9 @@
+2024-07-12 00:08:30,870 :: INFO train_model_with_validation :: 	fname: 'TCGA-CN-6998-01Z-00-DX1.5780b8b9-0a1f-4330-889c-b345b29396b2_1.png' 100
+2024-07-12 00:08:38,972 :: INFO save_model :: Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_9_operations_all.pth'
+2024-07-12 00:08:40,494 :: INFO train_model_with_validation :: --------------------
+[train] Loss: 0.192159
+[test] Loss: 0.330523
+2024-07-12 00:08:40,515 :: INFO train_model_with_validation :: --------------------
+2024-07-12 00:08:40,516 :: INFO train_model_with_validation :: 2788m 21s
+2024-07-12 00:08:40,516 :: INFO train_model_with_validation :: Best accuracy: 0.8701839065551757
+2024-07-12 00:08:40,516 :: INFO save_model :: Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_all.pth'

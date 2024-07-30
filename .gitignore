@@ -24,3 +24,5 @@ __pycache__
 **.amlignore*
 !gen_00430000.pt
 *.csv
+!/results/*
+!/results/*/*
