@@ -1,0 +1,14 @@
+024-07-31 08:41:44,624 :: INFO save_model :: Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_9_operations_all.pth'
+INFO:sourcecode.logger_utils:Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_9_operations_all.pth'
+[train] Loss: 0.183397
+[test] Loss: 0.350965
+2024-07-31 08:41:45,351 :: INFO train_model_with_validation :: --------------------
+INFO:sourcecode.logger_utils:--------------------
+2024-07-31 08:41:45,351 :: INFO train_model_with_validation :: --------------------
+INFO:sourcecode.logger_utils:--------------------
+2024-07-31 08:41:45,352 :: INFO train_model_with_validation :: 804m 34s
+INFO:sourcecode.logger_utils:804m 34s
+2024-07-31 08:41:45,352 :: INFO train_model_with_validation :: Best accuracy: 0.8700183868408203
+INFO:sourcecode.logger_utils:Best accuracy: 0.8700183868408203
+2024-07-31 08:41:45,352 :: INFO save_model :: Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_all.pth'
+INFO:sourcecode.logger_utils:Saving the model: 'ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_all.pth'

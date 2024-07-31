@@ -1,6 +1,20 @@
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
+
+def save_results(csv_input, csv_output):
+    path = Path(csv_input)
+    if not path.is_file():
+        with open(csv_output, mode='w+') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'transformations'])
+
+    with open(csv_output, mode='a+') as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        print('[{}] Loss: {:.6f}'.format(phase, epoch_loss[phase]))
+        csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], epoch_tp[phase], epoch_tn[phase], epoch_fp[phase], epoch_fn[phase], datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
+
 
 def plot_graph(csv_filename, fig_filename, legend=False, show=False, title='FCN Training - RCAug'):
     xdata1 = []
