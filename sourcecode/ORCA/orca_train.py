@@ -29,7 +29,8 @@ def train_model_with_validation(dataloaders,
 
     # Checking for GPU availability
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if use_cuda else "cpu"
-    logger.info('Runing on: {} | GPU available? {}'.format(device, torch.cuda.is_available()))
+    logger.info('Running on: {} | GPU available? {}'.format(device, torch.cuda.is_available()))
+    filename = None
 
     torch.cuda.empty_cache()
     if model is None:
@@ -38,9 +39,17 @@ def train_model_with_validation(dataloaders,
     augmentation = augmentation_strategy if augmentation_strategy in ["no_augmentation", "color_augmentation", "inpainting_augmentation"] else "{}_{}_operations".format(augmentation_strategy, len(augmentation_operations)-1)
     with open(result_file_csv, mode='a+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'date', 'transformations'])
+        csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'transformations'])
 
-    criterion = nn.BCELoss().to(device)
+# 1    criterion = nn.BCELoss().to(device)
+# 2    criterion = nn.L1Loss().to(device)
+# 3    criterion = nn.MSELoss().to(device)
+# 4    criterion = nn.HuberLoss().to(device)
+# 5    criterion = nn.SmoothL1Loss().to(device)
+# 6    criterion = nn.PoissonNLLLoss().to(device)
+# 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
+# 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
+    criterion = nn.L1Loss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -49,6 +58,7 @@ def train_model_with_validation(dataloaders,
 
     since = time.time()
     qtd_images = 0
+
     for epoch in range(start_epoch, n_epochs + 1):
 
         time_elapsed = time.time() - since
@@ -63,6 +73,10 @@ def train_model_with_validation(dataloaders,
         # Each epoch has a training and validation phase
         epoch_loss = {}
         epoch_acc = {}
+        epoch_tp = {}
+        epoch_tn = {}
+        epoch_fp = {}
+        epoch_fn = {}
         for phase in ['train', 'test']:
 
             model.train()
@@ -73,6 +87,10 @@ def train_model_with_validation(dataloaders,
 
             running_loss = 0.0
             running_accuracy = 0
+            running_tp = 0
+            running_tn = 0
+            running_fp = 0
+            running_fn = 0
             for batch_idx, (data, target, fname, original_size) in enumerate(dataloaders[phase]):
 
                 logger.info("\tfname: '{}' {}".format(fname[0], (batch_idx + 1)))
@@ -100,22 +118,40 @@ def train_model_with_validation(dataloaders,
 
                     torch.cuda.empty_cache()
 
-                    preds = torch.zeros(output.size(), dtype=torch.double).cuda()
+                    if use_cuda:
+                        preds = torch.zeros(output.size(), dtype=torch.double).cuda()
+                    else:
+                        preds = torch.zeros(output.size(), dtype=torch.double)
                     preds[output >= 0.5] = 1.0
 
                     # statistics
+                    tp = torch.sum(torch.logical_and(target.data == 1, target.data == preds)).detach().cpu().numpy()
+                    tn = torch.sum(torch.logical_and(target.data == 0, target.data == preds)).detach().cpu().numpy()
+                    fp = torch.sum(torch.logical_and(target.data == 1, target.data != preds)).detach().cpu().numpy()
+                    fn = torch.sum(torch.logical_and(target.data == 0, target.data != preds)).detach().cpu().numpy()
                     acc = torch.sum(preds == target.data).detach().cpu().numpy() / (data.size(0)*data.size(-1)*data.size(-2))
                     running_loss += loss.item() * data.size(0)
                     running_accuracy += acc
+                    running_tp += tp
+                    running_tn += tn
+                    running_fp += fp
+                    running_fn += fn
 
                     qtd_images = (batch_idx + 1) * len(data) if phase == 'train' else qtd_images
 
+#                    if batch_idx == 0:
+#                        break
+
             epoch_loss[phase] = running_loss / len(dataloaders[phase].dataset)
             epoch_acc[phase] = running_accuracy / len(dataloaders[phase].dataset)
+            epoch_tp[phase] = running_tp
+            epoch_tn[phase] = running_tn
+            epoch_fp[phase] = running_fp
+            epoch_fn[phase] = running_fn
 
         # save the model - each epoch
         #if epoch == 1 or epoch_loss[phase] < best_loss or epoch_acc[phase] > best_acc or (epoch % 10 == 0):
-        filename = save_model(output_dir, model, patch_size, epoch, qtd_images , batch_size, augmentation_strategy, optimizer, loss)
+        filename = save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation, optimizer, loss)
 
         if epoch_loss[phase] < best_loss:
             best_loss = epoch_loss[phase]
@@ -128,7 +164,7 @@ def train_model_with_validation(dataloaders,
             csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for phase in ['train', 'test']:
                 print('[{}] Loss: {:.6f}'.format(phase, epoch_loss[phase]))
-                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
+                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], epoch_tp[phase], epoch_tn[phase], epoch_fp[phase], epoch_fn[phase], datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
 
     time_elapsed = time.time() - since
     logger.info('-' * 20)
@@ -168,7 +204,8 @@ if __name__ == '__main__':
 
     dataset_dir = "../../datasets/ORCA"
     model_dir = "../../models"
-    
+    result_file_csv = "../../datasets/ORCA/training/orca_training_accuracy_loss_all.csv"
+
     augmentation_strategy = "random" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
     augmentation = [None,
                     "horizontal_flip", 
@@ -182,10 +219,13 @@ if __name__ == '__main__':
                     "inpainting"]
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
+    use_cuda = True
     start_epoch = 1
+    n_epochs = 400
     batch_size = 1
     patch_size = (640, 640)
     color_model = "LAB"
+
     dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_size[1]),
                                     batch_size=batch_size,
                                     shuffle=False,
@@ -196,22 +236,23 @@ if __name__ == '__main__':
                                     augmentation=augmentation,
                                     augmentation_strategy=augmentation_strategy,
                                     start_epoch=start_epoch,
-                                    validation_split=0.0)
+                                    validation_split=0.0,
+                                    use_cuda=use_cuda)
 
     # loads our u-net based model to continue previous training
-    #trained_model_version = "ORCA__Size-640x640_Epoch-10_Images-4181_Batch-1__random_distortion"
-    #trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
-    #model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
+#    trained_model_version = "ORCA__Size-640x640_Epoch-10_Images-4181_Batch-1__random_distortion"
+#    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
+#    model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
     # starts the training from scratch
     model = None
 
     # train the model
-    result_file_csv = "../../datasets/ORCA/training/orca_training_accuracy_loss.csv"
     train_model_with_validation(dataloaders=dataloaders,
                                 model=model,
-                                n_epochs=100,
+                                n_epochs=n_epochs,
                                 start_epoch=start_epoch,
+                                use_cuda=use_cuda,
                                 augmentation_strategy=augmentation_strategy,
                                 output_dir=model_dir,
                                 augmentation_operations=augmentation,

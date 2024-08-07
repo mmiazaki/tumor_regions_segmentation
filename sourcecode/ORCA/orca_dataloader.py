@@ -23,7 +23,8 @@ class ORCADataset(Dataset):
                  augmentation=None,
                  augmentation_strategy="random",
                  color_model="LAB",
-                 start_epoch=1):
+                 start_epoch=1,
+                 use_cuda=True):
         self.img_dir = img_dir
         self.img_input_size = img_input_size
         self.img_output_size = img_output_size
@@ -34,6 +35,7 @@ class ORCADataset(Dataset):
         self.samples = load_dataset(img_dir, img_input_size, dataset_type)
         self.used_images = set()
         self.epoch = start_epoch
+        self.use_cuda = use_cuda
 
     def __len__(self):
         return len(self.samples)
@@ -101,12 +103,18 @@ class ORCADataset(Dataset):
             config = get_config(config_file)
             checkpoint_path = os.path.join(sourcecode_dir, 'GAN/checkpoints', config['dataset_name'], config['mask_type'] + '_' + config['expname'])
 
-            cuda = config['cuda'] and torch.cuda.is_available()
+            if self.use_cuda:
+                cuda = config['cuda'] and torch.cuda.is_available()
+            else:
+                cuda = False
             device_ids = config['gpu_ids']
             GAN_model = Generator(config['netG'], cuda, device_ids)
             last_model_name = get_model_list(checkpoint_path, "gen", iteration=430000)
-            
-            checkpoint = torch.load(last_model_name) if torch.cuda.is_available() else torch.load(last_model_name, map_location=lambda storage, loc: storage)
+
+            if self.use_cuda:
+                checkpoint = torch.load(last_model_name) if torch.cuda.is_available() else torch.load(last_model_name, map_location=lambda storage, loc: storage)
+            else:
+                checkpoint = torch.load(last_model_name, map_location=lambda storage, loc: storage)
             GAN_model.load_state_dict(checkpoint)
 
         if len(self.used_images) <= 1:
@@ -115,7 +123,7 @@ class ORCADataset(Dataset):
         
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, should_augment)
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, False)
-        x, y, used_augmentations = data_augmentation(image, target_img, mask, self.img_input_size, self.img_output_size, augmentation_operations, GAN_model)
+        x, y, used_augmentations = data_augmentation(image, target_img, mask, self.img_input_size, self.img_output_size, augmentation_operations, GAN_model, self.use_cuda)
         return x, y, fname, image.size
 
 
@@ -168,19 +176,22 @@ def create_dataloader(tile_size="640x640",
                       augmentation=None,
                       augmentation_strategy="random",
                       start_epoch=1,
-                      validation_split=0.0):
+                      validation_split=0.0,
+                      use_cuda=True):
 
     if augmentation is None:
         augmentation = [None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation",
                         "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
     image_datasets = {x: ORCADataset(img_dir=dataset_dir,
-                                     img_input_size=img_input_size, img_output_size=img_output_size,
-                                     dataset_type='testing' if x == 'test' else 'training',
-                                     augmentation=augmentation,
-                                     augmentation_strategy='no_augmentation' if x != 'train' else augmentation_strategy,
-                                     color_model=color_model,
-                                     start_epoch=start_epoch) for x in ['train', 'valid', 'test']}
+                                            img_input_size=img_input_size, img_output_size=img_output_size,
+                                            dataset_type='testing' if x == 'test' else 'training',
+                                            augmentation=augmentation,
+                                            augmentation_strategy='no_augmentation' if x != 'train' else augmentation_strategy,
+                                            color_model=color_model,
+                                            start_epoch=start_epoch,
+                                            use_cuda=use_cuda) for x in ['train', 'valid', 'test']}
+
     if validation_split > 0:
 
         train_dataset_index, valid_dataset_index = train_test_split(range(len(image_datasets['train'])),

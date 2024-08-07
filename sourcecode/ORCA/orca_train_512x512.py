@@ -44,12 +44,12 @@ def train_model_with_validation(dataloaders,
 # 1    criterion = nn.BCELoss().to(device)
 # 2    criterion = nn.L1Loss().to(device)
 # 3    criterion = nn.MSELoss().to(device)
-# 4    criterion = nn.PoissonNLLLoss().to(device)
-# 5    criterion = nn.HuberLoss().to(device)
-# 6    criterion = nn.SmoothL1Loss().to(device)
+# 4    criterion = nn.HuberLoss().to(device)
+# 5    criterion = nn.SmoothL1Loss().to(device)
+# 6    criterion = nn.PoissonNLLLoss().to(device)
 # 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
 # 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.L1Loss().to(device)
+    criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -207,7 +207,16 @@ if __name__ == '__main__':
     result_file_csv = "../../datasets/ORCA_512x512/training/orca_training_accuracy_loss_all.csv"
     
     augmentation_strategy = "random" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
-    augmentation = [None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
+    augmentation = [None,
+                    "horizontal_flip",
+                    "vertical_flip",
+                    "rotation",
+                    "transpose",
+                    "elastic_transformation",
+                    "grid_distortion",
+                    "optical_distortion",
+                    "color_transfer",
+                    "inpainting"]
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
     use_cuda = True
