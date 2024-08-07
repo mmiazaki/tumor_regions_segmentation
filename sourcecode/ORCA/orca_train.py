@@ -150,8 +150,8 @@ def train_model_with_validation(dataloaders,
             epoch_fn[phase] = running_fn
 
         # save the model - each epoch
-        #if epoch == 1 or epoch_loss[phase] < best_loss or epoch_acc[phase] > best_acc or (epoch % 10 == 0):
-        filename = save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation, optimizer, loss)
+        if (epoch % 4 == 0):
+            filename = save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation, optimizer, loss)
 
         if epoch_loss[phase] < best_loss:
             best_loss = epoch_loss[phase]
