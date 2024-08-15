@@ -91,9 +91,10 @@ def train_model_with_validation(dataloaders,
             running_tn = 0
             running_fp = 0
             running_fn = 0
+            n_images = len(dataloaders[phase].dataset)
             for batch_idx, (data, target, fname, original_size) in enumerate(dataloaders[phase]):
 
-                logger.info("\tfname: '{}' {}".format(fname[0], (batch_idx + 1)))
+                logger.info("\tfname: '{}' {}/{} :: {} :: Epoch {}/{}".format(fname[0], (batch_idx + 1), n_images, phase, epoch, n_epochs))
 
                 data = Variable(data.to(device))
                 target = Variable(target.to(device)).unsqueeze(1)
