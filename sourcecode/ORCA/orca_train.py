@@ -49,7 +49,7 @@ def train_model_with_validation(dataloaders,
 # 6    criterion = nn.PoissonNLLLoss().to(device)
 # 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
 # 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.L1Loss().to(device)
+    criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -151,8 +151,8 @@ def train_model_with_validation(dataloaders,
             epoch_fn[phase] = running_fn
 
         # save the model - each epoch
-        if (epoch % 4 == 0):
-            filename = save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation, optimizer, loss)
+#        if (epoch % 4 == 0):
+        filename = save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation, optimizer, loss)
 
         if epoch_loss[phase] < best_loss:
             best_loss = epoch_loss[phase]
@@ -220,9 +220,9 @@ if __name__ == '__main__':
                     "inpainting"]
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
-    use_cuda = False
+    use_cuda = True
     start_epoch = 1
-    n_epochs = 400
+    n_epochs = 100
     batch_size = 1
     patch_size = (640, 640)
     color_model = "LAB"

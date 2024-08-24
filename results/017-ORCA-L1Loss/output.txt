@@ -1,0 +1,16 @@
+2024-08-15 16:42:37,312 :: INFO train_model_with_validation :: 	fname: 'TCGA-CN-6998-01Z-00-DX1.5780b8b9-0a1f-4330-889c-b345b29396b2_1_r6c5.png' 4481
+INFO:sourcecode.logger_utils:	fname: 'TCGA-CN-6998-01Z-00-DX1.5780b8b9-0a1f-4330-889c-b345b29396b2_1_r6c5.png' 4481
+2024-08-15 16:42:37,408 :: INFO save_model :: Saving the model: 'ORCA__Size-640x640_Epoch-100_Images-4181_Batch-1__random_9_operations_distortion.pth'
+INFO:sourcecode.logger_utils:Saving the model: 'ORCA__Size-640x640_Epoch-100_Images-4181_Batch-1__random_9_operations_distortion.pth'
+[train] Loss: 0.150685
+[test] Loss: 0.195003
+2024-08-15 16:42:38,166 :: INFO train_model_with_validation :: --------------------
+INFO:sourcecode.logger_utils:--------------------
+2024-08-15 16:42:38,167 :: INFO train_model_with_validation :: 
+INFO:sourcecode.logger_utils:
+2024-08-15 16:42:38,167 :: INFO train_model_with_validation :: --------------------
+INFO:sourcecode.logger_utils:--------------------
+2024-08-15 16:42:38,167 :: INFO train_model_with_validation :: Epoch 101/400 random_9_operations (12670m 12s) 2024-08-15 16:42:38.167801
+INFO:sourcecode.logger_utils:Epoch 101/400 random_9_operations (12670m 12s) 2024-08-15 16:42:38.167801
+2024-08-15 16:42:38,167 :: INFO train_model_with_validation :: --------------------
+INFO:sourcecode.logger_utils:--------------------
