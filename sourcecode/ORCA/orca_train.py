@@ -30,7 +30,6 @@ def train_model_with_validation(dataloaders,
     # Checking for GPU availability
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if use_cuda else "cpu"
     logger.info('Running on: {} | GPU available? {}'.format(device, torch.cuda.is_available()))
-    filename = None
 
     torch.cuda.empty_cache()
     if model is None:
@@ -49,7 +48,7 @@ def train_model_with_validation(dataloaders,
 # 6    criterion = nn.PoissonNLLLoss().to(device)
 # 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
 # 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.MSELoss().to(device)
+    criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -179,7 +178,7 @@ def save_model(model_dir, model, patch_size, epoch, imgs, batch_size, augmentati
     """
     Save the trained model
     """
-    filename = 'ORCA__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}__{}_distortion.pth'.format(patch_size[0], patch_size[1], epoch, imgs, batch_size, augmentation_strategy)
+    filename = 'ORCA__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}__{}_all.pth'.format(patch_size[0], patch_size[1], epoch, imgs, batch_size, augmentation_strategy)
     logger.info("Saving the model: '{}'".format(filename))
 
     filepath = os.path.join(model_dir, filename) if model_dir is not None else filename
@@ -221,7 +220,7 @@ if __name__ == '__main__':
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
     use_cuda = True
-    start_epoch = 23
+    start_epoch = 1
     n_epochs = 100
     batch_size = 1
     patch_size = (640, 640)
@@ -246,7 +245,7 @@ if __name__ == '__main__':
     model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
     # starts the training from scratch
-#    model = None
+    model = None
 
     # train the model
     train_model_with_validation(dataloaders=dataloaders,
