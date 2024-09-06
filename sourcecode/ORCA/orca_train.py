@@ -240,9 +240,9 @@ if __name__ == '__main__':
                                     use_cuda=use_cuda)
 
     # loads our u-net based model to continue previous training
-    trained_model_version = "ORCA__Size-640x640_Epoch-22_Images-4181_Batch-1__random_9_operations_distortion"
-    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
-    model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
+#    trained_model_version = "ORCA__Size-640x640_Epoch-22_Images-4181_Batch-1__random_9_operations_distortion"
+#    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
+#    model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
     # starts the training from scratch
     model = None
