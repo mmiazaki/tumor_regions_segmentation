@@ -49,7 +49,7 @@ def train_model_with_validation(dataloaders,
 # 6    criterion = nn.PoissonNLLLoss().to(device)
 # 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
 # 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.BCELoss().to(device)
+    criterion = nn.L1Loss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -213,7 +213,7 @@ if __name__ == '__main__':
                     "vertical_flip",
                     "rotation",
                     "transpose",
-                    "elastic_transformation",
+#                    "elastic_transformation",
                     "grid_distortion",
                     "optical_distortion",
                     "color_transfer",
