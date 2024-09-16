@@ -34,8 +34,8 @@ magnification = 0.625
 threshold_prob = 0.50
 threshold_itc = 200 / (0.243 * pow(2, 5))
 
-wsi_images_dir_normal = "{}/testing/normal/wsi".format(dataset_dir)
-wsi_images_dir_tumor = "{}/testing/tumor/wsi".format(dataset_dir)
+#wsi_images_dir_normal = "{}/testing/normal/wsi".format(dataset_dir)
+#wsi_images_dir_tumor = "{}/testing/tumor/wsi".format(dataset_dir)
 
 #trained_model_version = "ORCA_512x512__Size-512x512_Epoch-400_Images-100_Batch-1__random_9_operations_all"
 #trained_model_version = '022-ORCA512-BCELoss-random9'
