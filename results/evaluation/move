@@ -1,0 +1,6 @@
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/022-ORCA512-BCELoss-random9/testing/quantitative_analysis_0.5.csv 022-ORCA512-BCELoss-random9.csv
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/023-ORCA512-BCELoss-random8/testing/quantitative_analysis_0.5.csv 023-ORCA512-BCELoss-random8.csv
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/024-ORCA512-BCELoss-random9/testing/quantitative_analysis_0.5.csv 024-ORCA512-BCELoss-random9.csv
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/025-ORCA512-BCELoss-random8/testing/quantitative_analysis_0.5.csv 025-ORCA512-BCELoss-random8.csv
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/026-ORCA512-L1Loss-random9/testing/quantitative_analysis_0.5.csv  026-ORCA512-L1Loss-random9.csv
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/027-ORCA512-L1Loss-random8/testing/quantitative_analysis_0.5.csv  027-ORCA512-L1Loss-random8.csv
