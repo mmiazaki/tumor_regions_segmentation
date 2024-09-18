@@ -43,7 +43,9 @@ threshold_itc = 200 / (0.243 * pow(2, 5))
 #trained_model_version = '024-ORCA512-BCELoss-random9'
 #trained_model_version = '025-ORCA512-BCELoss-random8'
 #trained_model_version = '026-ORCA512-L1Loss-random9'
-trained_model_version = '027-ORCA512-L1Loss-random8'
+#trained_model_version = '027-ORCA512-L1Loss-random8'
+#trained_model_version = '028-ORCA512-MSELoss-random8'
+trained_model_version = '029-ORCA512-MSELoss-random9'
 
 results_dir = "{}/results/{}/testing".format(dataset_dir_results, trained_model_version)
 csv_file_path = "{}/quantitative_analysis_{}.csv".format(results_dir, threshold_prob)

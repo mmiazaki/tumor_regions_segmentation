@@ -1,0 +1,2 @@
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/028-ORCA512-MSELoss-random8/testing/quantitative_analysis_0.5.csv 028-ORCA512-MSELoss-random8.csv
+cp ~/Projects/GitHub/tumor_regions_segmentation/datasets/ORCA_512x512/results/029-ORCA512-MSELoss-random9/testing/quantitative_analysis_0.5.csv 029-ORCA512-MSELoss-random9.csv

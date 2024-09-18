@@ -47,7 +47,9 @@ logger.info('Runing on: {}'.format(device))
 #trained_model_version = '024-ORCA512-BCELoss-random9'
 #trained_model_version = '025-ORCA512-BCELoss-random8'
 #trained_model_version = '026-ORCA512-L1Loss-random9'
-trained_model_version = '027-ORCA512-L1Loss-random8'
+#trained_model_version = '027-ORCA512-L1Loss-random8'
+#trained_model_version = '028-ORCA512-MSELoss-random8'
+trained_model_version = '029-ORCA512-MSELoss-random9'
 
 trained_model_path="{}/{}".format(model_dir, '{}.pth'.format(trained_model_version))
 model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=use_cuda)

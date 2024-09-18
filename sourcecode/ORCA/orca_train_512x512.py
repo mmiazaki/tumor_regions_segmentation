@@ -46,10 +46,10 @@ def train_model_with_validation(dataloaders,
 # 3    criterion = nn.MSELoss().to(device)
 # 4    criterion = nn.HuberLoss().to(device)
 # 5    criterion = nn.SmoothL1Loss().to(device)
-# 6    criterion = nn.PoissonNLLLoss().to(device)
-# 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
-# 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.MSELoss().to(device)
+# 6XX  criterion = nn.PoissonNLLLoss().to(device)
+# 7XX    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
+# 8XX    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
+    criterion = nn.HuberLoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -241,7 +241,7 @@ if __name__ == '__main__':
                                     use_cuda=use_cuda)
 
     # loads our u-net based model to continue previous training
-#    trained_model_version = "ORCA_512x512__Size-512x512_Epoch-200_Images-100_Batch-1__random_8_operations_all"
+#    trained_model_version = "ORCA_512x512__Size-512x512_Epoch-280_Images-100_Batch-1__random_8_operations_all"
 #    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
 #    model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
