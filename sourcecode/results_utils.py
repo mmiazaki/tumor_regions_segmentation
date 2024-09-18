@@ -2,11 +2,24 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import os.path
+
+
+def calculate_avg_results(csv_input, csv_output, dataset_name):
+    #wsi_image	patch_image	class	auc	accuracy	precision	f1/dice	jaccard	sensitivity/recall	specificity	pixels	tp	tn	fp	fn
+    df = pd.read_csv(csv_input)
+
+    measures = ['accuracy', 'precision', 'f1/dice', 'jaccard', 'sensitivity/recall', 'specificity']
+    avg = [dataset_name]
+    for m in measures:
+        avg.append(df[m].mean())
+        #print("{}: {}".format(m, avg[-1]))
+    dfm = pd.DataFrame([avg], columns=['dataset']+measures)
+    dfm.to_csv(csv_output, mode = 'a', index = False, header = not os.path.isfile(csv_output), sep = ";", decimal= ",")
 
 
 def calculate_results(csv_input, csv_output_epoch, csv_output_final, dataset_name):
     #csv_input: model,augmentation,phase,epoch,loss,accuracy,TP,TN,FP,FN,date,transformations
-
     df = pd.read_csv(csv_input)
 
     # train = df.loc[(df['phase'] == 'train'), 'TP':'FN'].astype(float)
@@ -47,7 +60,7 @@ def calculate_results(csv_input, csv_output_epoch, csv_output_final, dataset_nam
         print('{} (min/mean/max/last): ({} / {} / {} / {})'.format(m, dfm1[m].min(), dfm1[m].mean(), dfm1[m].max(), dfm1[m][-1:].item()))
 
     dfm2 = pd.DataFrame([min, mean, max, last], columns=['dataset', 'type']+measures)
-    dfm2.to_csv(csv_output_final, mode='a', index=False, header=False)
+    dfm2.to_csv(csv_output_final, mode = 'a', index = False, header = not os.path.isfile(csv_output_final), sep = ";", decimal= ",")
 
 
 
@@ -101,18 +114,3 @@ def plot_graph(csv_filename, fig_filename, n_epochs, legend=False, show=False, t
     plt.savefig(fig_filename)
     if show:
         plt.show()
-
-if __name__ == '__main__':
-    csv_filename = '../datasets/ORCA_512x512/training/Test1-completo--orca_training_accuracy_loss_all.csv'
-    fig_filename = '../datasets/ORCA_512x512/training/Test1-plot.png'
-#    plot_graph(csv_filename, fig_filename, 400, True, True)
-
-    csv_input        = '../results/012-ORCA512-BCELoss-Full/orca_training_accuracy_loss_all.csv'
-    csv_output_epoch = '../results/012-ORCA512-BCELoss-Full/epoch_measures.csv'
-    csv_output_final = '../results/012-ORCA512-BCELoss-Full/final_measures.csv'
-
-    #csv_input = '../results/020-ORCA512-BCELoss-8aug/orca_training_accuracy_loss_all.csv'
-    #csv_output_epoch = '../results/020-ORCA512-BCELoss-8aug/epoch_measures.csv'
-    #csv_output_final = '../results/020-ORCA512-BCELoss-8aug/final_measures.csv'
-
-    calculate_results(csv_input, csv_output_epoch, csv_output_final, '')
