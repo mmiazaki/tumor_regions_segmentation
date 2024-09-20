@@ -49,7 +49,7 @@ def train_model_with_validation(dataloaders,
 # 6XX  criterion = nn.PoissonNLLLoss().to(device)
 # 7XX    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
 # 8XX    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.HuberLoss().to(device)
+    criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
