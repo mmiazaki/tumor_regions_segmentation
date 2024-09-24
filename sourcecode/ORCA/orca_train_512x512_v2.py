@@ -10,10 +10,13 @@ from sourcecode.train_utils import *
 
 
 
+dataset_name="0XX_ORCA_512x512__"
+loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+optimizer_algorithm="Adam"
 
 dataset_dir = "../../datasets/ORCA_512x512"
 model_dir = "../../models"
-result_file_csv = "../../datasets/ORCA_512x512/training/orca_training_accuracy_loss_all.csv"
+result_file_csv = "../../datasets/ORCA_512x512/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
 augmentation_strategy = "random"  # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
 augmentation = [None,
@@ -35,9 +38,6 @@ n_epochs = 400
 batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
-loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
-optimizer_algorithm="Adam"
-dataset_name="0XX_ORCA_512x512__"
 
 dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_size[1]),
                                 batch_size=batch_size,
