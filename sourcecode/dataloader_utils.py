@@ -7,6 +7,7 @@ import torchvision.transforms.functional as TF
 
 import random
 import matplotlib.pyplot as plt
+import albumentations as A
 
 current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
@@ -16,16 +17,8 @@ from sourcecode.wsi_image_utils import *
 from sourcecode.logger_utils import *
 from sourcecode.GAN.model.networks import Generator
 from sourcecode.GAN.utils.tools import get_config, random_bbox, mask_image, is_image_file, default_loader, normalize, get_model_list
-
 from torchvision import transforms
 
-from albumentations import (
-    Transpose,
-    RandomRotate90,
-    ElasticTransform,
-    GridDistortion,
-    OpticalDistortion
-)
 
 
 def is_valid_file(filename, extensions=('.jpg', '.bmp', '.tif', '.png')):
@@ -56,7 +49,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
 
         # Random rotation
         if "rotation" in aug and (len(aug) < 2 or random.random() > 0.5) and img_input_size[0] == img_input_size[1]:
-            augmented = RandomRotate90(p=1)(image=np.array(image),
+            augmented = A.RandomRotate90(p=1)(image=np.array(image),
                                             mask=np.array(mask) if mask is not None else np.zeros(img_output_size))
             image = Image.fromarray(augmented['image'])
             mask = Image.fromarray(augmented['mask'])
@@ -64,7 +57,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
 
         # Random transpose
         if "transpose" in aug and (len(aug) < 2 or random.random() > 0.5) and img_input_size[0] == img_input_size[1]:
-            augmented = Transpose(p=1)(image=np.array(image),
+            augmented = A.Transpose(p=1)(image=np.array(image),
                                        mask=np.array(mask) if mask is not None else np.zeros(img_output_size))
             image = Image.fromarray(augmented['image'])
             mask = Image.fromarray(augmented['mask'])
@@ -73,7 +66,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
         # Random elastic transformation
         if "elastic_transformation" in aug and (len(aug) < 2 or random.random() > 0.5):
             alpha = random.randint(100, 200)
-            augmented = ElasticTransform(p=1, alpha=alpha, sigma=alpha * 0.05, alpha_affine=alpha * 0.03)(
+            augmented = A.ElasticTransform(p=1, alpha=alpha, sigma=alpha * 0.05, alpha_affine=alpha * 0.03)(
                 image=np.array(image), mask=np.array(mask) if mask is not None else np.zeros(img_output_size))
             image = Image.fromarray(augmented['image'])
             mask = Image.fromarray(augmented['mask'])
@@ -81,7 +74,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
 
         # Random GridDistortion
         if "grid_distortion" in aug and (len(aug) < 2 or random.random() > 0.5):
-            augmented = GridDistortion(p=1)(image=np.array(image),
+            augmented = A.GridDistortion(p=1)(image=np.array(image),
                                             mask=np.array(mask) if mask is not None else np.zeros(img_output_size))
             image = Image.fromarray(augmented['image'])
             mask = Image.fromarray(augmented['mask'])
@@ -89,7 +82,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
 
         # Random OpticalDistortion
         if "optical_distortion" in aug and (len(aug) < 2 or random.random() > 0.5):
-            augmented = OpticalDistortion(p=1, distort_limit=1, shift_limit=0.5)(image=np.array(image),
+            augmented = A.OpticalDistortion(p=1, distort_limit=1, shift_limit=0.5)(image=np.array(image),
                                                                                  mask=np.array(
                                                                                      mask) if mask is not None else np.zeros(
                                                                                      img_output_size))
@@ -106,6 +99,13 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
             _, _, augmented_img = transfer_color(original_img_lab, target_img_lab)
             image = transforms.ToPILImage()(torch.from_numpy(augmented_img).permute(2, 0, 1))
             used_augmentations.append("color_transfer")
+
+        aug_name = ['CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur']
+        for a in aug:
+            if a in aug_name and (len(aug) < 2 or random.random() > 0.5):
+                augmented = getattr(A, a)(always_apply=True)(image=np.array(image))
+                image = Image.fromarray(augmented['image'])
+                used_augmentations.append(a)
 
         # Inpainting augmentation
         if "inpainting" in aug and (len(aug) < 2 or random.random() > 0.5):
