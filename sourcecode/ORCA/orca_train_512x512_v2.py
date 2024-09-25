@@ -10,7 +10,7 @@ from sourcecode.train_utils import *
 
 
 
-dataset_name="0XX_ORCA_512x512__"
+dataset_name="100_ORCA_512x512__"
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -29,10 +29,9 @@ augmentation = [None,
                 "optical_distortion",
                 "color_transfer",
                 "inpainting",
-'CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur'
-                ]
+                'CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur']
 
-use_cuda = False
+use_cuda = True
 start_epoch = 1
 n_epochs = 400
 batch_size = 1

@@ -213,7 +213,7 @@ if __name__ == '__main__':
                     "vertical_flip",
                     "rotation",
                     "transpose",
-                    "elastic_transformation",
+#                    "elastic_transformation",
                     "grid_distortion",
                     "optical_distortion",
                     "color_transfer",
