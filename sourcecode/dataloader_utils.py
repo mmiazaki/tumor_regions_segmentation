@@ -100,11 +100,23 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
             image = transforms.ToPILImage()(torch.from_numpy(augmented_img).permute(2, 0, 1))
             used_augmentations.append("color_transfer")
 
-        aug_name = ['CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur']
+        # Pixel-level transforms
+        aug_pixel = ['CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur']
         for a in aug:
-            if a in aug_name and (len(aug) < 2 or random.random() > 0.5):
+            if a in aug_pixel and (len(aug) < 2 or random.random() > 0.5):
                 augmented = getattr(A, a)(always_apply=True)(image=np.array(image))
                 image = Image.fromarray(augmented['image'])
+                used_augmentations.append(a)
+
+        # Spatial-level transforms
+        aug_spatial = ['Morphological', 'PixelDropout', 'Rotate', 'SafeRotate', 'Perspective', 'ShiftScaleRotate']
+        for a in aug:
+            if a in aug_spatial and (len(aug) < 2 or random.random() > 0.5):
+                augmented = getattr(A, a)(always_apply=True)(image=np.array(image), mask=np.array(
+                                                                                     mask) if mask is not None else np.zeros(
+                                                                                     img_output_size))
+                image = Image.fromarray(augmented['image'])
+                mask = Image.fromarray(augmented['mask'])
                 used_augmentations.append(a)
 
         # Inpainting augmentation

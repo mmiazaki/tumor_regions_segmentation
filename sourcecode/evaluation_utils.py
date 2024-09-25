@@ -231,3 +231,16 @@ def tn_fp_fn_tp(target, prediction, pixel=True):
 
     tn, fp, fn, tp = metrics.confusion_matrix(mask_np.ravel(), output_np.ravel(), labels=[0, 1]).ravel()
     return (tn+fp+fn+tp), tn, fp, fn, tp
+
+
+def calculate_avg_results(csv_input, csv_output, dataset_name):
+    #wsi_image	patch_image	class	auc	accuracy	precision	f1/dice	jaccard	sensitivity/recall	specificity	pixels	tp	tn	fp	fn
+    df = pd.read_csv(csv_input)
+
+    measures = ['accuracy', 'precision', 'f1/dice', 'jaccard', 'sensitivity/recall', 'specificity']
+    avg = [dataset_name]
+    for m in measures:
+        avg.append(df[m].mean())
+        #print("{}: {}".format(m, avg[-1]))
+    dfm = pd.DataFrame([avg], columns=['dataset']+measures)
+    dfm.to_csv(csv_output, mode = 'a', index = False, header = not os.path.isfile(csv_output), sep = ";", decimal= ",")

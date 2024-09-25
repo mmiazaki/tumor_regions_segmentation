@@ -98,7 +98,7 @@ class ORCADataset512x512(ORCADataset):
 
         if self.epoch > 1 and augmentation_operations is not None and 'inpainting' in augmentation_operations:
 
-            # Prepares the GAN model            
+            # Prepares the GAN model
             sourcecode_dir = os.path.dirname(os.path.abspath('.'))
             config_file = os.path.join(sourcecode_dir, 'GAN/configs/config_imagenet_ocdc.yaml')
             config = get_config(config_file)
@@ -121,10 +121,11 @@ class ORCADataset512x512(ORCADataset):
         if len(self.used_images) <= 1:
             logger.info("Epoch: '{}' augmentation {} {}".format(self.epoch, self.augmentation_strategy,
                                                                 augmentation_operations))
-        
+
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, should_augment)
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, False)
         x, y, used_augmentations = data_augmentation(image, target_img, mask, self.img_input_size, self.img_output_size, augmentation_operations, GAN_model, self.use_cuda)
+        logger.info("Used augmentation(s): {}".format(used_augmentations))
         return x, y, fname, image.size
 
 

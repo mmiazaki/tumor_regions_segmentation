@@ -1,4 +1,5 @@
 from sourcecode.results_utils import *
+from sourcecode.evaluation_utils import *
 
 if __name__ == '__main__':
     execute1 = False
@@ -30,22 +31,22 @@ if __name__ == '__main__':
 
 
 
-    if execute2:
-        # Evaluation dataset
-        csv_dir = '../../results/evaluation/'
-        csv_output = '../../results/evaluation/final_avg_measures.csv'
-
-        dataset = [
-            '022-ORCA512-BCELoss-random9',
-            '023-ORCA512-BCELoss-random8',
-            '024-ORCA512-BCELoss-random9',
-            '025-ORCA512-BCELoss-random8',
-            '026-ORCA512-L1Loss-random9',
-            '027-ORCA512-L1Loss-random8',
-            '028-ORCA512-MSELoss-random8',
-            '029-ORCA512-MSELoss-random9']
-
-        for ds in dataset:
-            print('::::: Calculating measures (evaluation): ' + ds + ' :::::')
-            csv_input = csv_dir+ds+'.csv'
-            calculate_avg_results(csv_input, csv_output, ds)
+    # if execute2:
+    #     # Evaluation dataset
+    #     csv_dir = '../../results/evaluation/'
+    #     csv_output = '../../results/evaluation/final_avg_measures.csv'
+    #
+    #     dataset = [
+    #         '022-ORCA512-BCELoss-random9',
+    #         '023-ORCA512-BCELoss-random8',
+    #         '024-ORCA512-BCELoss-random9',
+    #         '025-ORCA512-BCELoss-random8',
+    #         '026-ORCA512-L1Loss-random9',
+    #         '027-ORCA512-L1Loss-random8',
+    #         '028-ORCA512-MSELoss-random8',
+    #         '029-ORCA512-MSELoss-random9']
+    #
+    #     for ds in dataset:
+    #         print('::::: Calculating measures (evaluation): ' + ds + ' :::::')
+    #         csv_input = csv_dir+ds+'.csv'
+    #         calculate_avg_results(csv_input, csv_output, ds)
