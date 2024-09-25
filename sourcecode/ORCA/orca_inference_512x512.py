@@ -35,13 +35,19 @@ load_models = [
     # '027-ORCA512-L1Loss-random8',
     # '028-ORCA512-MSELoss-random8',
     # '029-ORCA512-MSELoss-random9',
-    '030-ORCA512-HuberLoss-random9',
-    '031-ORCA512-SmoothL1Loss-random9',
-    '032-ORCA512-SmoothL1Loss-random8',
-    '033-ORCA512-HuberLoss-random8',
-    '034-ORCA512-BCELoss-random9',
-    '035-ORCA512-BCELoss-random8',
-    '036-ORCA512-BCELoss-random9']
+    # '030-ORCA512-HuberLoss-random9',
+    # '031-ORCA512-SmoothL1Loss-random9',
+    # '032-ORCA512-SmoothL1Loss-random8',
+    # '033-ORCA512-HuberLoss-random8',
+    # '034-ORCA512-BCELoss-random9',
+    # '035-ORCA512-BCELoss-random8',
+    # '036-ORCA512-BCELoss-random9',
+    '100_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_25_operations',
+    '101_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_16_operations',
+    '102_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_18_operations',
+    '103_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_24_operations',
+    '104_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
+    '105_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_inpainting_augmentation']
 
 
 
