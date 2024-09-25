@@ -1,5 +1,6 @@
 import os
 import csv
+import pandas as pd
 
 from sourcecode.wsi_image_utils import *
 from sklearn import metrics
