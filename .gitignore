@@ -27,3 +27,7 @@ __pycache__
 !/results/*
 !/results/*/*
 !/results/*/*/*
+!/datasets/ORCA_512X512/*.csv
+!/datasets/ORCA/*.csv
+!/datasets/OCDC/*.csv
+!/datasets/CAMELYON16/*.csv
