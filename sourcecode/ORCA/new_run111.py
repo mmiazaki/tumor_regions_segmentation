@@ -18,17 +18,17 @@ dataset_dir = "../../datasets/ORCA_512x512"
 model_dir = "../../models"
 result_file_csv = "../../datasets/ORCA_512x512/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
-augmentation_strategy = "random" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
+augmentation_strategy = "standard" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
 augmentation = [None,
-                #"horizontal_flip",
-                #"vertical_flip",
-                #"rotation",
-                #"transpose",
-                "elastic_transformation",
+                "horizontal_flip",
+                "vertical_flip",
+                "rotation",
+                "transpose",
+                #"elastic_transformation",
                 "grid_distortion",
-                #"optical_distortion",
-                #"color_transfer",
-                #"inpainting",
+                "optical_distortion",
+                "color_transfer",
+                "inpainting",
                 #'CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur'
                 ]
 
