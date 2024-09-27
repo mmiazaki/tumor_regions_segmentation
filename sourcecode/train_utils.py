@@ -178,8 +178,8 @@ def train_model_with_validation(dataloaders,
         # save the model - each epoch
         # if (epoch % 10 == 0):
         filename = save_model(output_dir, model, dataset_name, patch_size, epoch, qtd_images, batch_size, loss_function, optimizer_algorithm, augmentation)
-        if epoch - 2 >= 1:
-            delete_model(output_dir, dataset_name, patch_size, epoch - 4, qtd_images, batch_size, loss_function, optimizer_algorithm, augmentation)
+        if epoch - 3 >= 1:
+            delete_model(output_dir, dataset_name, patch_size, epoch - 3, qtd_images, batch_size, loss_function, optimizer_algorithm, augmentation)
 
         if epoch_loss[phase] < best_loss:
             best_loss = epoch_loss[phase]
