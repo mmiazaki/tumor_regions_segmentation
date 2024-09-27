@@ -9,28 +9,17 @@ from sourcecode.ORCA.orca_dataloader_512x512 import *
 from sourcecode.train_utils import *
 
 
-
-dataset_name="100_ORCA_512x512__"
-loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
-optimizer_algorithm="Adam"
-
+### Directories and files ###
 dataset_dir = "../../datasets/ORCA_512x512"
 model_dir = "../../models"
 result_file_csv = "../../datasets/ORCA_512x512/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
-augmentation_strategy = "random"  # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
-augmentation = [None,
-                "horizontal_flip",
-                "vertical_flip",
-                "rotation",
-                "transpose",
-                "elastic_transformation",
-                "grid_distortion",
-                "optical_distortion",
-                "color_transfer",
-                "inpainting",
-                'CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur']
+# loads our u-net based model to continue previous training
+#trained_model_version = "ORCA_512x512__Size-512x512_Epoch-280_Images-100_Batch-1__random_8_operations_all"
+trained_model_version = None # starts the training from scratch
 
+
+### Configurations ###
 use_cuda = True
 start_epoch = 1
 n_epochs = 400
@@ -38,6 +27,58 @@ batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
+dataset_name="100_ORCA512" # prefix name used in the model file
+loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+optimizer_algorithm="Adam"
+
+# "no_augmentation"        : without any augmentation
+# "color_augmentation"     : color transfer augmentation
+# "inpainting_augmentation": inpainting augmentation
+# "standard"               : it uses all augmentations, sequentially one by one in each epoch
+# "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
+# "solo"                   : it just uses the first available augmentation in the list (not None)
+augmentation_strategy = "solo"
+
+augmentation = [None,
+                #"horizontal_flip",
+                #"vertical_flip",
+                #"rotation",
+                #"transpose",
+                "elastic_transformation",
+                #"grid_distortion",
+                #"optical_distortion",
+                #"color_transfer",
+                #"inpainting",
+                #'CLAHE',
+                #'Downscale',
+                #'Equalize',
+                #'HueSaturationValue',
+                #'ISONoise',
+                #'MultiplicativeNoise',
+                #'RandomGravel',
+                #'RingingOvershoot',
+                #'Sharpen',
+                #'Blur',
+                #'Defocus',
+                #'GaussianBlur',
+                #'GlassBlur',
+                #'MedianBlur',
+                #'MotionBlur',
+                #'ZoomBlur',
+                #'MotionBlur',
+                #'Morphological',
+                #'PixelDropout',
+                #'Rotate',
+                #'SafeRotate',
+                #'Perspective',
+                #'ShiftScaleRotate',
+                ]
+
+
+
+################################################################################################################
+
+# load images
 dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_size[1]),
                                 batch_size=batch_size,
                                 shuffle=False,
@@ -51,13 +92,13 @@ dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_si
                                 validation_split=0.0,
                                 use_cuda=use_cuda)
 
-# loads our u-net based model to continue previous training
-# trained_model_version = "ORCA_512x512__Size-512x512_Epoch-280_Images-100_Batch-1__random_8_operations_all"
-# trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
-# model = load_model(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
-# starts the training from scratch
-model = None
+# load a trained model or define model as None
+if trained_model_version is not None:
+    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
+    model = load_model(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
+else:
+    model = None
 
 # train the model
 train_model_with_validation(dataloaders=dataloaders,

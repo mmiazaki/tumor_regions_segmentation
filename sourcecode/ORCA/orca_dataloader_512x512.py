@@ -89,6 +89,14 @@ class ORCADataset512x512(ORCADataset):
             idx = (self.epoch-2) % len(augmentations)
             augmentation_operations.append(augmentations[idx])
 
+        elif 'solo' in self.augmentation_strategy:
+
+            augmentations = self.augmentation.copy()
+            if None in augmentations:
+                augmentations.remove(None)
+            augmentation_operations.append(augmentations[0])
+
+
 
         if self.epoch > 1 and augmentation_operations is not None and 'color_transfer' in augmentation_operations:
 

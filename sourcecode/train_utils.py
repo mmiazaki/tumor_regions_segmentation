@@ -62,9 +62,16 @@ def train_model_with_validation(dataloaders,
     if model is None:
         model = UNet(in_channels=3, out_channels=1, padding=True, img_input_size=patch_size).to(device)
 
-    augmentation = augmentation_strategy if augmentation_strategy in ["no_augmentation", "color_augmentation",
-                                                                      "inpainting_augmentation"] else "{}_{}_operations".format(
-        augmentation_strategy, len(augmentation_operations) - 1)
+    if augmentation_strategy in ["no_augmentation", "color_augmentation", "inpainting_augmentation"]:
+        augmentation = augmentation_strategy
+    elif augmentation_strategy == "solo":
+        aug_tmp = augmentation_operations
+        if None in aug_tmp:
+            aug_tmp.remove(None)
+        augmentation = aug_tmp[0]
+    else:
+        augmentation = "{}_{}_operations".format(augmentation_strategy, len(augmentation_operations) - 1)
+
     with open(result_file_csv, mode='a+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(
@@ -210,7 +217,7 @@ def delete_model(model_dir, dataset_name, patch_size, epoch, imgs, batch_size, l
     """
     Delete the trained model
     """
-    filename = '{}__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}_{}_{}_{}.pth'.format(dataset_name, patch_size[0],
+    filename = '{}_{}x{}_Epoch-{}_Images-{}_Batch-{}_{}_{}_{}.pth'.format(dataset_name, patch_size[0],
                                                                                 patch_size[1],
                                                                                 epoch, imgs, batch_size,
                                                                                 loss_function, optimizer_algorithm,
@@ -225,7 +232,7 @@ def save_model(model_dir, model, dataset_name, patch_size, epoch, imgs, batch_si
     """
     Save the trained model
     """
-    filename = '{}__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}_{}_{}_{}.pth'.format(dataset_name, patch_size[0],
+    filename = '{}_{}x{}_Epoch-{}_Images-{}_Batch-{}_{}_{}_{}.pth'.format(dataset_name, patch_size[0],
                                                                                 patch_size[1],
                                                                                 epoch, imgs, batch_size,
                                                                                 loss_function, optimizer_algorithm,
