@@ -48,11 +48,16 @@ load_models = [
     # '103_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_24_operations',
     # '104_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
     # '105_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_inpainting_augmentation',
-    '106_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_no_augmentation',
-    '107_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_color_augmentation',
-    '108_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_4_operations',
-    '109_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_2_operations',
-    '110_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_9_operations',
+    # '106_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_no_augmentation',
+    # '107_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_color_augmentation',
+    # '108_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_4_operations',
+    # '109_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_2_operations',
+    # '110_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_9_operations',
+    '111_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
+    '112_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_2_operations',
+    '113_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_4_operations',
+    '114_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_1_operations',
+    '117_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_1_operations',
     ]
 
 
