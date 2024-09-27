@@ -9,11 +9,8 @@ from sourcecode.ORCA.orca_dataloader_512x512 import *
 from sourcecode.train_utils import *
 
 
-### Directories and files ###
-dataset_dir = "../../datasets/ORCA_512x512"
-model_dir = "../../models"
-result_file_csv = "../../datasets/ORCA_512x512/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
+### Model ###
 # loads our u-net based model to continue previous training
 #trained_model_version = "ORCA_512x512__Size-512x512_Epoch-280_Images-100_Batch-1__random_8_operations_all"
 trained_model_version = None # starts the training from scratch
@@ -27,7 +24,7 @@ batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="100_ORCA512" # prefix name used in the model file
+dataset_name="999_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -73,6 +70,13 @@ augmentation = [None,
                 #'Perspective',
                 #'ShiftScaleRotate',
                 ]
+
+
+### Directories and files ###
+dataset_dir = "../../datasets/ORCA_512x512"
+model_dir = "../../models"
+result_file_csv = "../../datasets/ORCA_512x512/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
+
 
 
 

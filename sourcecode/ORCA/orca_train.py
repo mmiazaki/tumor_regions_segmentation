@@ -139,8 +139,8 @@ def train_model_with_validation(dataloaders,
 
                     qtd_images = (batch_idx + 1) * len(data) if phase == 'train' else qtd_images
 
-#                    if batch_idx == 0:
-#                        break
+                if batch_idx == 0:
+                    break
 
             epoch_loss[phase] = running_loss / len(dataloaders[phase].dataset)
             epoch_acc[phase] = running_accuracy / len(dataloaders[phase].dataset)
