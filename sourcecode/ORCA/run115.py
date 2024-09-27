@@ -34,7 +34,7 @@ augmentation = [None,
                 ]
 
 use_cuda = True
-start_epoch = 1
+start_epoch = 296
 n_epochs = 400
 batch_size = 1
 patch_size = (512, 512)
@@ -54,12 +54,12 @@ dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_si
                                 use_cuda=use_cuda)
 
 # loads our u-net based model to continue previous training
-# trained_model_version = "ORCA_512x512__Size-512x512_Epoch-280_Images-100_Batch-1__random_8_operations_all"
-# trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
-# model = load_model(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
+trained_model_version = "115_ORCA_512x512____Size-512x512_Epoch-295_Images-100_Batch-1_BCELoss_Adam_random_9_operations"
+trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
+model = load_model(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
 # starts the training from scratch
-model = None
+# model = None
 
 # train the model
 train_model_with_validation(dataloaders=dataloaders,
