@@ -9,12 +9,10 @@ from sourcecode.ORCA.orca_dataloader_512x512 import *
 from sourcecode.train_utils import *
 
 
-
 ### Model ###
 # loads our u-net based model to continue previous training
 #trained_model_version = "ORCA_512x512__Size-512x512_Epoch-280_Images-100_Batch-1__random_8_operations_all"
 trained_model_version = None # starts the training from scratch
-
 
 ### Configurations ###
 use_cuda = True
