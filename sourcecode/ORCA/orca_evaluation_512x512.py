@@ -95,9 +95,9 @@ load_models = [
     # '177_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_optical_distortion',
     # '143_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Defocus',
     # '181_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
-    # '182_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
-    # '183_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
-    '184_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
+    '182_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
+    '183_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
+    # '184_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
     ]
 
 
