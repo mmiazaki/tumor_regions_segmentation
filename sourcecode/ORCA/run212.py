@@ -11,7 +11,7 @@ from sourcecode.train_utils import *
 
 ### Model ###
 # loads our u-net based model to continue previous training
-#trained_model_version = "ORCA_512x512__Size-512x512_Epoch-280_Images-100_Batch-1__random_8_operations_all"
+#trained_model_version = "182_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations"
 trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
@@ -22,7 +22,7 @@ batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="185_ORCA512" # prefix name used in the model file
+dataset_name="212_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -47,7 +47,7 @@ augmentation = [None,
                 #'CLAHE',
                 #'Downscale',
                 #'Equalize',
-                'HueSaturationValue',
+                #'HueSaturationValue',
                 #'ISONoise',
                 #'MultiplicativeNoise',
                 #'RandomGravel',
@@ -59,7 +59,7 @@ augmentation = [None,
                 #'GlassBlur',
                 #'MedianBlur',
                 #'MotionBlur',
-                #'ZoomBlur',
+                'ZoomBlur',
                 #'MotionBlur',
                 #'Morphological',
                 #'PixelDropout',

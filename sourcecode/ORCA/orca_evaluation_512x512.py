@@ -54,11 +54,50 @@ load_models = [
     # '108_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_4_operations',
     # '109_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_2_operations',
     # '110_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_9_operations',
-    '111_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
-    '112_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_2_operations',
-    '113_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_4_operations',
-    '114_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_1_operations',
-    '117_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_1_operations',
+    # '111_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
+    # '112_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_2_operations',
+    # '113_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_4_operations',
+    # '114_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_1_operations',
+    # '117_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_1_operations',
+    # '115_ORCA_512x512___512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
+    # '116_ORCA_512x512___512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
+    # '118_ORCA_512x512____Size-512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_1_operations',
+    # '121_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_CLAHE',
+    # '122_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Downscale',
+    # '123_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Equalize',
+    # '124_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_HueSaturationValue',
+    # '125_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Morphological',
+    # '131_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_ISONoise',
+    # '132_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_MultiplicativeNoise',
+    # '133_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_RandomGravel',
+    # '134_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_RingingOvershoot',
+    # '135_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Rotate',
+    # '141_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Sharpen',
+    # '142_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Blur',
+    # '144_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_GaussianBlur',
+    # '145_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_SafeRotate',
+    # '151_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_GlassBlur',
+    # '152_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_MedianBlur',
+    # '153_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_MotionBlur',
+    # '154_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_ZoomBlur',
+    # '155_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Perspective',
+    # '161_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_no_augmentation',
+    # '162_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_8_operations',
+    # '163_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
+    # '164_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
+    # '165_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_no_augmentation',
+    # '171_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_ShiftScaleRotate',
+    # '172_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_horizontal_flip',
+    # '173_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_vertical_flip',
+    # '174_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_rotation',
+    # '175_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_transpose',
+    # '176_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_grid_distortion',
+    # '177_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_optical_distortion',
+    # '143_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Defocus',
+    # '181_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_standard_8_operations',
+    # '182_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
+    # '183_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
+    '184_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations',
     ]
 
 
@@ -122,8 +161,8 @@ for trained_model_version in load_models:
 
             total_pixels, tn, fp, fn, tp = tn_fp_fn_tp(mask_np_img, predicted_np_img)
 
-            print(fname[0])
-            print("Results for {:26} ({:7} - {:8} - {:04.2f} accuracy)".format(fname[0], patch_class, "unet", accuracy))
+            # print(fname[0])
+            print("Results for ({}) {:26} ({:7} - {:8} - {:04.2f} accuracy)".format(batch_idx+1, fname[0], patch_class, "unet", accuracy))
             # print("   Precision: \t{}".format(precision))
             # print("   Recall/Sen: \t{}".format(recall))
             # print("   F1/Dice: \t{}".format(f1))
