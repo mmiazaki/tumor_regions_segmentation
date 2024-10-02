@@ -22,7 +22,7 @@ batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="143_ORCA512" # prefix name used in the model file
+dataset_name="184_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -32,21 +32,21 @@ optimizer_algorithm="Adam"
 # "standard"               : it uses all augmentations, sequentially one by one in each epoch
 # "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
 # "solo"                   : it just uses the first available augmentation in the list (not None)
-augmentation_strategy = "solo"
+augmentation_strategy = "random"
 
 augmentation = [None,
-                #"horizontal_flip",
-                #"vertical_flip",
-                #"rotation",
-                #"transpose",
+                "horizontal_flip",
+                "vertical_flip",
+                "rotation",
+                "transpose",
                 #"elastic_transformation",
-                #"grid_distortion",
-                #"optical_distortion",
-                #"color_transfer",
-                #"inpainting",
+                "grid_distortion",
+                "optical_distortion",
+                "color_transfer",
+                "inpainting",
                 #'CLAHE',
                 #'Downscale',
-                #'Equalize',
+                'Equalize',
                 #'HueSaturationValue',
                 #'ISONoise',
                 #'MultiplicativeNoise',
@@ -54,7 +54,7 @@ augmentation = [None,
                 #'RingingOvershoot',
                 #'Sharpen',
                 #'Blur',
-                'Defocus',
+                #'Defocus',
                 #'GaussianBlur',
                 #'GlassBlur',
                 #'MedianBlur',
@@ -67,7 +67,7 @@ augmentation = [None,
                 #'SafeRotate',
                 #'Perspective',
                 #'ShiftScaleRotate',
-            ]
+                ]
 
 
 ### Directories and files ###

@@ -22,7 +22,7 @@ batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="143_ORCA512" # prefix name used in the model file
+dataset_name="177_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -41,7 +41,7 @@ augmentation = [None,
                 #"transpose",
                 #"elastic_transformation",
                 #"grid_distortion",
-                #"optical_distortion",
+                "optical_distortion",
                 #"color_transfer",
                 #"inpainting",
                 #'CLAHE',
@@ -54,7 +54,7 @@ augmentation = [None,
                 #'RingingOvershoot',
                 #'Sharpen',
                 #'Blur',
-                'Defocus',
+                #'Defocus',
                 #'GaussianBlur',
                 #'GlassBlur',
                 #'MedianBlur',
@@ -67,7 +67,7 @@ augmentation = [None,
                 #'SafeRotate',
                 #'Perspective',
                 #'ShiftScaleRotate',
-            ]
+                ]
 
 
 ### Directories and files ###
