@@ -11,19 +11,19 @@ from sourcecode.train_utils import *
 
 ### Model ###
 # loads our u-net based model to continue previous training
-trained_model_version = "204_ORCA512_512x512_Epoch-44_Images-100_Batch-1_BCELoss_Adam_random_9_operations"
-#trained_model_version = None # starts the training from scratch
+#trained_model_version = "182_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations"
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
 use_cuda = True
-start_epoch = 45
+start_epoch = 1
 n_epochs = 400
 batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="204_ORCA512" # prefix name used in the model file
-loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+dataset_name="226_ORCA512" # prefix name used in the model file
+loss_function="SmoothL1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation
@@ -32,19 +32,19 @@ optimizer_algorithm="Adam"
 # "standard"               : it uses all augmentations, sequentially one by one in each epoch
 # "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
 # "solo"                   : it just uses the first available augmentation in the list (not None)
-augmentation_strategy = "random"
+augmentation_strategy = "solo"
 
 augmentation = [None,
-                "horizontal_flip",
-                "vertical_flip",
-                "rotation",
-                "transpose",
+                #"horizontal_flip",
+                #"vertical_flip",
+                #"rotation",
+                #"transpose",
                 #"elastic_transformation",
-                "grid_distortion",
-                "optical_distortion",
-                "color_transfer",
-                "inpainting",
-                #'CLAHE',
+                #"grid_distortion",
+                #"optical_distortion",
+                #"color_transfer",
+                #"inpainting",
+                'CLAHE',
                 #'Downscale',
                 #'Equalize',
                 #'HueSaturationValue',
@@ -56,7 +56,7 @@ augmentation = [None,
                 #'Blur',
                 #'Defocus',
                 #'GaussianBlur',
-                'GlassBlur',
+                #'GlassBlur',
                 #'MedianBlur',
                 #'MotionBlur',
                 #'ZoomBlur',
