@@ -152,6 +152,8 @@ def train_model_with_validation(dataloaders,
         # save the model - each epoch
 #        if (epoch % 4 == 0):
         filename = save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation, optimizer, loss)
+        if epoch - 3 >= 1:
+            delete_model(patch_size, epoch - 3, qtd_images, batch_size, augmentation)
 
         if epoch_loss[phase] < best_loss:
             best_loss = epoch_loss[phase]
@@ -200,6 +202,18 @@ def save_model(model_dir, model, patch_size, epoch, imgs, batch_size, augmentati
     return filename
 
 
+def delete_model(patch_size, epoch, imgs, batch_size, augmentation_strategy):
+    """
+    Delete the trained model
+    """
+    filename = 'OCDC__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}__{}_all.pth'.format(patch_size[0], patch_size[1], epoch,
+                                                                                 imgs, batch_size,
+                                                                                 augmentation_strategy)
+    filepath = os.path.join(model_dir, filename) if model_dir is not None else filename
+    if os.path.exists(filepath):
+        os.remove(filepath)
+
+
 if __name__ == '__main__':
 
     dataset_dir = "../../datasets/OCDC"
@@ -220,7 +234,7 @@ if __name__ == '__main__':
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
     use_cuda = True
-    start_epoch = 224
+    start_epoch = 292
     n_epochs = 400
     batch_size = 1
     patch_size = (640, 640)
@@ -240,7 +254,7 @@ if __name__ == '__main__':
                                     use_cuda=use_cuda)
 
     # loads our u-net based model to continue previous training
-    trained_model_version = "OCDC__Size-640x640_Epoch-223_Images-840_Batch-1__random_8_operations_all"
+    trained_model_version = "OCDC/OCDC__Size-640x640_Epoch-291_Images-840_Batch-1__random_8_operations_all"
     trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
     model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
