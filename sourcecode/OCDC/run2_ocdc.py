@@ -11,7 +11,7 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.ORCA.orca_dataloader import *
+from sourcecode.OCDC.ocdc_dataloader import *
 from sourcecode.unet_model import *
 
 
@@ -25,7 +25,7 @@ def train_model_with_validation(dataloaders,
                                 output_dir="../../models",
                                 augmentation_strategy="random",
                                 augmentation_operations=[None],
-                                result_file_csv="../../datasets/ORCA/training/orca_training_accuracy_loss.csv"):
+                                result_file_csv="../../datasets/OCDC/training/ocdc_training_accuracy_loss.csv"):
 
     # Checking for GPU availability
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if use_cuda else "cpu"
@@ -48,7 +48,7 @@ def train_model_with_validation(dataloaders,
 # 6    criterion = nn.PoissonNLLLoss().to(device)
 # 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
 # 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.HuberLoss().to(device)
+    criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -139,8 +139,8 @@ def train_model_with_validation(dataloaders,
 
                     qtd_images = (batch_idx + 1) * len(data) if phase == 'train' else qtd_images
 
-#                if batch_idx == 0:
-#                    break
+#                    if batch_idx == 0:
+#                        break
 
             epoch_loss[phase] = running_loss / len(dataloaders[phase].dataset)
             epoch_acc[phase] = running_accuracy / len(dataloaders[phase].dataset)
@@ -181,7 +181,7 @@ def save_model(model_dir, model, patch_size, epoch, imgs, batch_size, augmentati
     """
     Save the trained model
     """
-    filename = 'ORCA__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}__{}_all.pth'.format(patch_size[0], patch_size[1], epoch, imgs, batch_size, augmentation_strategy)
+    filename = 'OCDC__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}__{}_all.pth'.format(patch_size[0], patch_size[1], epoch, imgs, batch_size, augmentation_strategy)
     logger.info("Saving the model: '{}'".format(filename))
 
     filepath = os.path.join(model_dir, filename) if model_dir is not None else filename
@@ -189,7 +189,7 @@ def save_model(model_dir, model, patch_size, epoch, imgs, batch_size, augmentati
         torch.save({
             'epoch': epoch,
             'batch_size': batch_size,
-            'dataset': 'ORCADataset',
+            'dataset': 'OCDCDataset',
             'model_in_channels': model.model_input_channels(),
             'model_out_channels': model.model_output_channels(),
             'model_up_mode': model.model_up_mode(),
@@ -207,7 +207,7 @@ def delete_model(patch_size, epoch, imgs, batch_size, augmentation_strategy):
     """
     Delete the trained model
     """
-    filename = 'ORCA__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}__{}_all.pth'.format(patch_size[0], patch_size[1], epoch,
+    filename = 'OCDC__Size-{}x{}_Epoch-{}_Images-{}_Batch-{}__{}_all.pth'.format(patch_size[0], patch_size[1], epoch,
                                                                                  imgs, batch_size,
                                                                                  augmentation_strategy)
     filepath = os.path.join(model_dir, filename) if model_dir is not None else filename
@@ -217,9 +217,9 @@ def delete_model(patch_size, epoch, imgs, batch_size, augmentation_strategy):
 
 if __name__ == '__main__':
 
-    dataset_dir = "../../datasets/ORCA"
+    dataset_dir = "../../datasets/OCDC"
     model_dir = "../../models"
-    result_file_csv = "../../datasets/ORCA/training/orca_training_accuracy_loss_all.csv"
+    result_file_csv = "../../models/run2.csv"
 
     augmentation_strategy = "random" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
     augmentation = [None,
@@ -227,7 +227,7 @@ if __name__ == '__main__':
                     "vertical_flip", 
                     "rotation", 
                     "transpose", 
-                    "elastic_transformation", 
+#                    "elastic_transformation",
                     "grid_distortion", 
                     "optical_distortion", 
                     "color_transfer", 
@@ -236,7 +236,7 @@ if __name__ == '__main__':
 
     use_cuda = True
     start_epoch = 1
-    n_epochs = 100
+    n_epochs = 400
     batch_size = 1
     patch_size = (640, 640)
     color_model = "LAB"
@@ -255,9 +255,9 @@ if __name__ == '__main__':
                                     use_cuda=use_cuda)
 
     # loads our u-net based model to continue previous training
-#    trained_model_version = "ORCA__Size-640x640_Epoch-22_Images-4181_Batch-1__random_9_operations_distortion"
-#    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
-#    model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
+    #trained_model_version = "OCDC/OCDC__Size-640x640_Epoch-291_Images-840_Batch-1__random_8_operations_all"
+    #trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
+    #model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
     # starts the training from scratch
     model = None

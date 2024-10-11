@@ -1,0 +1,2 @@
+cd sourcecode/OCDC
+python run2_ocdc.py

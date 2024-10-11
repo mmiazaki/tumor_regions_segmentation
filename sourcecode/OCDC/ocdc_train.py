@@ -38,7 +38,7 @@ def train_model_with_validation(dataloaders,
     augmentation = augmentation_strategy if augmentation_strategy in ["no_augmentation", "color_augmentation", "inpainting_augmentation"] else "{}_{}_operations".format(augmentation_strategy, len(augmentation_operations)-1)
     with open(result_file_csv, mode='a+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'transformations'])
+        csv_writer.writerow(['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'time', 'transformations'])
 
 # 1    criterion = nn.BCELoss().to(device)
 # 2    criterion = nn.L1Loss().to(device)
@@ -163,17 +163,18 @@ def train_model_with_validation(dataloaders,
         logger.info("-" * 20)
 
         with open(result_file_csv, mode='a+') as csv_file:
+            time_elapsed = time.time() - since
             csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for phase in ['train', 'test']:
                 print('[{}] Loss: {:.6f}'.format(phase, epoch_loss[phase]))
-                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], epoch_tp[phase], epoch_tn[phase], epoch_fp[phase], epoch_fn[phase], datetime.datetime.now(), str(augmentation_operations).replace(",", "")])
+                csv_writer.writerow([filename, augmentation, phase, epoch, epoch_loss[phase], epoch_acc[phase], epoch_tp[phase], epoch_tn[phase], epoch_fp[phase], epoch_fn[phase], datetime.datetime.now(), time_elapsed, str(augmentation_operations).replace(",", "")])
 
     time_elapsed = time.time() - since
     logger.info('-' * 20)
     logger.info('{:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     logger.info('Best accuracy: {}'.format(best_acc))
 
-    save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation_strategy, optimizer, loss)
+    #save_model(output_dir, model, patch_size, epoch, qtd_images, batch_size, augmentation_strategy, optimizer, loss)
 
 
 def save_model(model_dir, model, patch_size, epoch, imgs, batch_size, augmentation_strategy, optimizer, loss):

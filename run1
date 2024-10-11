@@ -1,0 +1,2 @@
+cd sourcecode/ORCA
+python run1_orca.py

@@ -48,7 +48,7 @@ def train_model_with_validation(dataloaders,
 # 6    criterion = nn.PoissonNLLLoss().to(device)
 # 7    criterion = nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
 # 8    criterion = nn.SoftMarginLoss().to(device) # target in [-1 1]
-    criterion = nn.HuberLoss().to(device)
+    criterion = nn.BCELoss().to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
 
@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
     dataset_dir = "../../datasets/ORCA"
     model_dir = "../../models"
-    result_file_csv = "../../datasets/ORCA/training/orca_training_accuracy_loss_all.csv"
+    result_file_csv = "../../models/run1.csv"
 
     augmentation_strategy = "random" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
     augmentation = [None,
@@ -227,7 +227,7 @@ if __name__ == '__main__':
                     "vertical_flip", 
                     "rotation", 
                     "transpose", 
-                    "elastic_transformation", 
+                    #"elastic_transformation", 
                     "grid_distortion", 
                     "optical_distortion", 
                     "color_transfer", 
