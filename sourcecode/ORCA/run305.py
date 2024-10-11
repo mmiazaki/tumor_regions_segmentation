@@ -11,19 +11,19 @@ from sourcecode.train_utils import *
 
 ### Model ###
 # loads our u-net based model to continue previous training
-trained_model_version = "267_ORCA512_512x512_Epoch-348_Images-100_Batch-1_L1Loss_Adam_elastic_transformation"
-#trained_model_version = None # starts the training from scratch
+#trained_model_version = "182_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_random_9_operations"
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
 use_cuda = True
-start_epoch = 345
+start_epoch = 1
 n_epochs = 400
 batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="267_ORCA512" # prefix name used in the model file
-loss_function="L1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+dataset_name="305_ORCA512" # prefix name used in the model file
+loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation
@@ -35,37 +35,34 @@ optimizer_algorithm="Adam"
 augmentation_strategy = "solo"
 
 augmentation = [None,
-                #"horizontal_flip",
-                #"vertical_flip",
-                #"rotation",
-                #"transpose",
-                "elastic_transformation",
-                #"grid_distortion",
-                #"optical_distortion",
-                #"color_transfer",
-                #"inpainting",
-                #'CLAHE',
-                #'Downscale',
-                #'Equalize',
-                #'HueSaturationValue',
-                #'ISONoise',
-                #'MultiplicativeNoise',
-                #'RandomGravel',
-                #'RingingOvershoot',
-                #'Sharpen',
-                #'Blur',
-                #'Defocus',
-                #'GaussianBlur',
-                #'GlassBlur',
-                #'MedianBlur',
-                #'MotionBlur',
-                #'ZoomBlur',
-                #'Morphological',
-                #'PixelDropout',
-                #'Rotate',
-                #'SafeRotate',
-                #'Perspective',
-                #'ShiftScaleRotate',
+                #'AdvancedBlur',
+                #'ChannelDropout',
+                #'ChannelShuffle',
+                #'ChromaticAberration',
+                #'ColorJitter',
+                'Emboss',
+                #'FancyPCA',
+                #'GaussNoise',
+                #'ImageCompression',
+                #'InvertImg',
+                #'Normalize',
+                #'PlanckianJitter',
+                #'Posterize',
+                #'RGBShift',
+                #'RandomBrightnessContrast',
+                #'RandomFog',
+                #'RandomGamma',
+                #'RandomRain',
+                #'RandomShadow',
+                #'RandomSnow',
+                #'RandomSunFlare',
+                #'RandomToneCurve',
+                #'Solarize',
+                #'Spatter',
+                #'Superpixels',
+                #'ToGray',
+                #'ToSepia',
+                #'UnsharpMask',
                 ]
 
 
