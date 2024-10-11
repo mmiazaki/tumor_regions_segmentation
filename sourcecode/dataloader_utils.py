@@ -101,7 +101,13 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
             used_augmentations.append("color_transfer")
 
         # Pixel-level transforms
-        aug_pixel = ['CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise', 'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur', 'MedianBlur', 'MotionBlur', 'ZoomBlur']
+        aug_pixel = ['CLAHE', 'Downscale', 'Equalize', 'HueSaturationValue', 'ISONoise', 'MultiplicativeNoise',
+                     'RandomGravel', 'RingingOvershoot', 'Sharpen', 'Blur', 'Defocus', 'GaussianBlur', 'GlassBlur',
+                     'MedianBlur', 'MotionBlur', 'ZoomBlur', 'AdvancedBlur', 'ChannelDropout', 'ChannelShuffle',
+                     'ChromaticAberration', 'ColorJitter', 'Emboss', 'FancyPCA', 'GaussNoise', 'ImageCompression',
+                     'InvertImg', 'Normalize', 'PlanckianJitter', 'Posterize', 'RGBShift', 'RandomBrightnessContrast',
+                     'RandomFog', 'RandomGamma', 'RandomRain', 'RandomShadow', 'RandomSnow', 'RandomSunFlare',
+                     'RandomToneCurve', 'Solarize', 'Spatter', 'Superpixels', 'ToGray', 'ToSepia', 'UnsharpMask',]
         for a in aug:
             if a in aug_pixel and (len(aug) < 2 or random.random() > 0.5):
                 augmented = getattr(A, a)(always_apply=True)(image=np.array(image))
