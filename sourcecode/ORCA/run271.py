@@ -11,12 +11,12 @@ from sourcecode.train_utils import *
 
 ### Model ###
 # loads our u-net based model to continue previous training
-trained_model_version = "271_ORCA512_512x512_Epoch-82_Images-100_Batch-1_L1Loss_Adam_inpainting"
+trained_model_version = "271_ORCA512_512x512_Epoch-333_Images-100_Batch-1_L1Loss_Adam_inpainting"
 #trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
 use_cuda = True
-start_epoch = 83
+start_epoch = 334
 n_epochs = 400
 batch_size = 1
 patch_size = (512, 512)

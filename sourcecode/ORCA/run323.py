@@ -22,7 +22,7 @@ batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="319_ORCA512" # prefix name used in the model file
+dataset_name="323_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -54,11 +54,11 @@ augmentation = [None,
                 #'RandomGamma',
                 #'RandomRain',
                 #'RandomShadow',
-                'RandomSnow',
+                #'RandomSnow',
                 #'RandomSunFlare',
                 #'RandomToneCurve',
                 #'Solarize',
-                #'Spatter',
+                'Spatter',
                 #'Superpixels',
                 #'ToGray',
                 #'ToSepia',

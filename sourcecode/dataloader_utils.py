@@ -115,7 +115,10 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
                 used_augmentations.append(a)
 
         # Spatial-level transforms
-        aug_spatial = ['Morphological', 'PixelDropout', 'Rotate', 'SafeRotate', 'Perspective', 'ShiftScaleRotate']
+        aug_spatial = ['Morphological', 'PixelDropout', 'Rotate', 'SafeRotate', 'Perspective', 'ShiftScaleRotate',
+                       'Affine', 'CoarseDropout', 'D4', 'GridDropout', 'Lambda', 'LongestMaxSize', 'MixUp',
+                       'PadIfNeeded', 'PiecewiseAffine', 'RandomCropFromBorders', 'RandomGridShuffle', 'RandomScale',
+                       'SmallestMaxSize', 'XYMasking',]
         for a in aug:
             if a in aug_spatial and (len(aug) < 2 or random.random() > 0.5):
                 augmented = getattr(A, a)(always_apply=True)(image=np.array(image), mask=np.array(
@@ -123,6 +126,22 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
                                                                                      img_output_size))
                 image = Image.fromarray(augmented['image'])
                 mask = Image.fromarray(augmented['mask'])
+                used_augmentations.append(a)
+
+        # Pixel-level transforms with reference_images
+        aug_pixel_ref = ['FDA', 'PixelDistributionAdaptation']
+        for a in aug:
+            if a in aug_pixel_ref and (len(aug) < 2 or random.random() > 0.5):
+                augmented = getattr(A, a)(reference_images=[target_img], always_apply=True, read_fn=lambda x: x)(image=np.array(image))
+                image = Image.fromarray(augmented['image'])
+                used_augmentations.append(a)
+
+        # Pixel-level transforms with templates
+        aug_pixel_ref = ['TemplateTransform']
+        for a in aug:
+            if a in aug_pixel_ref and (len(aug) < 2 or random.random() > 0.5):
+                augmented = getattr(A, a)(templates=[target_img], always_apply=True)(image=np.array(image))
+                image = Image.fromarray(augmented['image'])
                 used_augmentations.append(a)
 
         # Inpainting augmentation
