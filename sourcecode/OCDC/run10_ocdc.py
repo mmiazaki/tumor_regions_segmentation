@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
     dataset_dir = "../../datasets/OCDC"
     model_dir = "../../models"
-    result_file_csv = "../../models/run2.csv"
+    result_file_csv = "../../models/run10.csv"
 
     augmentation_strategy = "random" # "no_augmentation", "color_augmentation", "inpainting_augmentation", "standard", "random"
     augmentation = [None,
