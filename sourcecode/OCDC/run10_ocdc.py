@@ -234,7 +234,7 @@ if __name__ == '__main__':
                     "inpainting"]
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
-    use_cuda = False
+    use_cuda = True
     start_epoch = 1
     n_epochs = 400
     batch_size = 1
