@@ -8,6 +8,7 @@ if hasattr(os, 'add_dll_directory'):
     with os.add_dll_directory(OPENSLIDE_PATH):
         import openslide
 else:
+    # Linux
     import openslide
 
 import numpy as np
