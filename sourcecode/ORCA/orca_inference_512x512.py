@@ -15,7 +15,7 @@ from datetime import datetime
 from skimage import measure
 
 dataset_dir = "../../datasets/ORCA_512x512"
-model_dir = "../../models"
+model_dir = "../../models/"
 
 use_cuda=True
 batch_size = 1
@@ -197,7 +197,10 @@ load_models = [
     # '328_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Affine',
     # '329_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_CoarseDropout',
     # '330_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_D4',
-    '332_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Lambda',
+    # '332_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_Lambda',
+    '319_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_RandomSnow',
+    '331_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_GridDropout',
+    '338_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adam_RandomGridShuffle',
     ]
 
 
