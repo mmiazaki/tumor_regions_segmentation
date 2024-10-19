@@ -11,19 +11,19 @@ from sourcecode.train_utils import *
 
 ### Model ###
 # loads our u-net based model to continue previous training
-trained_model_version = "276_ORCA512_512x512_Epoch-228_Images-100_Batch-1_L1Loss_Adam_ISONoise"
-#trained_model_version = None # starts the training from scratch
+#trained_model_version = "" # file name without extension .pth
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
 use_cuda = True
-start_epoch = 229
+start_epoch = 1
 n_epochs = 400
 batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 
-dataset_name="276_ORCA512" # prefix name used in the model file
-loss_function="L1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+dataset_name="415_ORCA512" # prefix name used in the model file
+loss_function="SmoothL1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation
@@ -48,7 +48,7 @@ augmentation = [None,
                 #'Downscale',
                 #'Equalize',
                 #'HueSaturationValue',
-                'ISONoise',
+                #'ISONoise',
                 #'MultiplicativeNoise',
                 #'RandomGravel',
                 #'RingingOvershoot',
@@ -66,6 +66,51 @@ augmentation = [None,
                 #'SafeRotate',
                 #'Perspective',
                 #'ShiftScaleRotate',
+                #'AdvancedBlur',
+                #'ChannelDropout',
+                #'ChannelShuffle',
+                #'ChromaticAberration',
+                #'ColorJitter',
+                #'Emboss',
+                #'FancyPCA',
+                #'GaussNoise',
+                #'ImageCompression',
+                #'InvertImg',
+                ###'Normalize',
+                #'PlanckianJitter',
+                #'Posterize',
+                #'RGBShift',
+                'RandomBrightnessContrast',
+                #'RandomFog',
+                #'RandomGamma',
+                #'RandomRain',
+                #'RandomShadow',
+                #'RandomSnow',
+                #'RandomSunFlare',
+                #'RandomToneCurve',
+                #'Solarize',
+                #'Spatter',
+                #'Superpixels',
+                #'ToGray',
+                #'ToSepia',
+                #'UnsharpMask',
+                #'Affine',
+                #'CoarseDropout',
+                #'D4',
+                #'GridDropout',
+                #'Lambda',
+                ###'LongestMaxSize',
+                ###'MixUp',
+                ###'PadIfNeeded',
+                #'PiecewiseAffine',
+                ###'RandomCropFromBorders',
+                #'RandomGridShuffle',
+                ###'RandomScale',
+                ###'SmallestMaxSize',
+                #'XYMasking',
+                ###'FDA',
+                ###'PixelDistributionAdaptation',
+                ###'TemplateTransform',
                 ]
 
 
