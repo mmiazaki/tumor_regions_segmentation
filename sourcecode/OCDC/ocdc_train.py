@@ -235,7 +235,7 @@ if __name__ == '__main__':
     #[None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation", "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
     use_cuda = True
-    start_epoch = 292
+    start_epoch = 320
     n_epochs = 400
     batch_size = 1
     patch_size = (640, 640)
@@ -255,7 +255,7 @@ if __name__ == '__main__':
                                     use_cuda=use_cuda)
 
     # loads our u-net based model to continue previous training
-    trained_model_version = "OCDC/OCDC__Size-640x640_Epoch-291_Images-840_Batch-1__random_8_operations_all"
+    trained_model_version = "OCDC/OCDC__Size-640x640_Epoch-319_Images-840_Batch-1__random_8_operations_all"
     trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
     model = load_checkpoint(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 
