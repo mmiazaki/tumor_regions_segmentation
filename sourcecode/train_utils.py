@@ -42,7 +42,7 @@ def get_optimizer(optimizer, model_parameters):
 
 def train_model_with_validation(dataloaders,
                                 model=None,
-                                patch_size=(512, 512),
+                                patch_size=(640, 640),
                                 n_epochs=1,
                                 start_epoch=1,
                                 batch_size=1,
@@ -53,7 +53,8 @@ def train_model_with_validation(dataloaders,
                                 dataset_name="",
                                 loss_function="BCELoss",
                                 optimizer_algorithm="Adam",
-                                result_file_csv="../../datasets/ORCA_512x512/training/orca_training_accuracy_loss.csv"):
+                                result_file_csv="../../datasets/training_accuracy_loss.csv",
+                                model_saving_frequency=('all', 0)):
     # Checking for GPU availability
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if use_cuda else "cpu"
     logger.info('Running on: {} | GPU available? {}'.format(device, torch.cuda.is_available()))
@@ -182,11 +183,8 @@ def train_model_with_validation(dataloaders,
             epoch_fp[phase] = running_fp
             epoch_fn[phase] = running_fn
 
-        # save the model - each epoch
-        # if (epoch % 10 == 0):
-        filename = save_model(output_dir, model, dataset_name, patch_size, epoch, qtd_images, batch_size, loss_function, optimizer_algorithm, augmentation)
-        if epoch - 3 >= 1:
-            delete_model(output_dir, dataset_name, patch_size, epoch - 3, qtd_images, batch_size, loss_function, optimizer_algorithm, augmentation)
+        filename = save_model(output_dir, model, dataset_name, patch_size, epoch, qtd_images, batch_size,
+                              loss_function, optimizer_algorithm, augmentation, model_saving_frequency)
 
         if epoch_loss[phase] < best_loss:
             best_loss = epoch_loss[phase]
@@ -210,7 +208,26 @@ def train_model_with_validation(dataloaders,
     logger.info('{:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     logger.info('Best accuracy: {}'.format(best_acc))
 
-    #save_model(output_dir, model, dataset_name, patch_size, epoch, qtd_images, batch_size, loss_function, optimizer_algorithm, augmentation_strategy)
+
+
+def save_model(model_dir, model, dataset_name, patch_size, epoch, qtd_images, batch_size, loss_function,
+                       optimizer_algorithm, augmentation, model_saving_frequency):
+    filename = '{}_{}x{}_Epoch-{}_Images-{}_Batch-{}_{}_{}_{}.pth'.format(dataset_name, patch_size[0],
+                                                                                patch_size[1],
+                                                                                epoch, qtd_images, batch_size,
+                                                                                loss_function, optimizer_algorithm,
+                                                                                augmentation)
+    if model_saving_frequency is not None:
+        if model_saving_frequency[0] == 'all':
+            save_model_file(filename, model_dir, model, dataset_name, epoch, batch_size, loss_function, optimizer_algorithm)
+        elif model_saving_frequency[0] == 'every':
+            if epoch % model_saving_frequency[1] == 0:
+                save_model_file(filename, model_dir, model, dataset_name, epoch, batch_size, loss_function, optimizer_algorithm)
+        elif model_saving_frequency[0] == 'last':
+            save_model_file(filename, model_dir, model, dataset_name, epoch, batch_size, loss_function, optimizer_algorithm)
+            if epoch - model_saving_frequency[1] >= 1:
+                delete_model(model_dir, dataset_name, patch_size, epoch - model_saving_frequency[1], qtd_images, batch_size, loss_function, optimizer_algorithm, augmentation)
+    return filename
 
 
 
@@ -229,15 +246,10 @@ def delete_model(model_dir, dataset_name, patch_size, epoch, imgs, batch_size, l
 
 
 
-def save_model(model_dir, model, dataset_name, patch_size, epoch, imgs, batch_size, loss_function, optimizer_algorithm, augmentation):
+def save_model_file(filename, model_dir, model, dataset_name, epoch, batch_size, loss_function, optimizer_algorithm):
     """
     Save the trained model
     """
-    filename = '{}_{}x{}_Epoch-{}_Images-{}_Batch-{}_{}_{}_{}.pth'.format(dataset_name, patch_size[0],
-                                                                                patch_size[1],
-                                                                                epoch, imgs, batch_size,
-                                                                                loss_function, optimizer_algorithm,
-                                                                                augmentation)
     logger.info("Saving the model: '{}'".format(filename))
 
     filepath = os.path.join(model_dir, filename) if model_dir is not None else filename
@@ -246,15 +258,14 @@ def save_model(model_dir, model, dataset_name, patch_size, epoch, imgs, batch_si
             'epoch': epoch,
             'batch_size': batch_size,
             'dataset': dataset_name,
-            'model_in_channels': model.model_input_channels(),      #usado
-            'model_out_channels': model.model_output_channels(),    #usado
-            'model_up_mode': model.model_up_mode(),                 #usado
-            'model_padding': model.model_padding(),                 #usado
+            'model_in_channels': model.model_input_channels(),
+            'model_out_channels': model.model_output_channels(),
+            'model_up_mode': model.model_up_mode(),
+            'model_padding': model.model_padding(),
             'criterion': loss_function,
             'optimizer': optimizer_algorithm,
-            'model_state_dict': model.state_dict()                   #usado
+            'model_state_dict': model.state_dict()
         }, f)
-    return filename
 
 
 
