@@ -21,7 +21,7 @@ patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="4999_ORCA640" # prefix name used in the model file
+dataset_name="4000_ORCA640" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -31,18 +31,18 @@ optimizer_algorithm="Adam"
 # "standard"               : it uses all augmentations, sequentially one by one in each epoch
 # "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
 # "solo"                   : it just uses the first available augmentation in the list (not None)
-augmentation_strategy = "solo"
+augmentation_strategy = "random"
 
 augmentation = [None,
                 "horizontal_flip",
-                #"vertical_flip",
-                #"rotation",
-                #"transpose",
+                "vertical_flip",
+                "rotation",
+                "transpose",
                 #"elastic_transformation",
-                #"grid_distortion",
-                #"optical_distortion",
-                #"color_transfer",
-                #"inpainting",
+                "grid_distortion",
+                "optical_distortion",
+                "color_transfer",
+                "inpainting",
                 #'CLAHE',
                 #'Downscale',
                 #'Equalize',
@@ -119,9 +119,9 @@ result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".
 
 ### Model saving frequency
 #model_saving_frequency = None          # No save
-#model_saving_frequency = ('all', 0)    # Save all
+model_saving_frequency = ('all', 0)    # Save all
 #model_saving_frequency = ('every', 10) # Save every 10 epochs
-model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
+#model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
 
 
 ################################################################################################################

@@ -21,8 +21,7 @@ patch_size = (512, 512)
 color_model = "LAB"
 use_cuda = True
 
-#dataset_name="999_ORCA512" # prefix name used in the model file
-dataset_name="999_TEST" # prefix name used in the model file
+dataset_name="999_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -32,7 +31,7 @@ optimizer_algorithm="Adam"
 # "standard"               : it uses all augmentations, sequentially one by one in each epoch
 # "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
 # "solo"                   : it just uses the first available augmentation in the list (not None)
-augmentation_strategy = "no_augmentation"
+augmentation_strategy = "solo"
 
 augmentation = [None,
                 "horizontal_flip",
@@ -116,8 +115,7 @@ augmentation = [None,
 ### Directories and files ###
 dataset_dir = "../../datasets/ORCA_512x512"
 model_dir = "../../models"
-#result_file_csv = "../../datasets/ORCA_512x512/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
-result_file_csv = "../../models/test.csv"
+result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
 ### Model saving frequency
 #model_saving_frequency = None          # No save
@@ -149,6 +147,7 @@ if trained_model_version is not None:
     model = load_model(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
 else:
     model = None
+
 
 # train the model
 train_model_with_validation(dataloaders=dataloaders,

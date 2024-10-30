@@ -5,6 +5,7 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
+
 from sourcecode.dataloader_utils import *
 
 from torch.utils.data import Dataset
@@ -88,6 +89,14 @@ class ORCADataset(Dataset):
             idx = (self.epoch-2) % len(augmentations)
             augmentation_operations.append(augmentations[idx])
 
+        elif 'solo' in self.augmentation_strategy:
+
+            augmentations = self.augmentation.copy()
+            if None in augmentations:
+                augmentations.remove(None)
+            augmentation_operations.append(augmentations[0])
+
+
 
         if self.epoch > 1 and augmentation_operations is not None and 'color_transfer' in augmentation_operations:
 
@@ -97,7 +106,7 @@ class ORCADataset(Dataset):
 
         if self.epoch > 1 and augmentation_operations is not None and 'inpainting' in augmentation_operations:
 
-            # Prepares the GAN model            
+            # Prepares the GAN model
             sourcecode_dir = os.path.dirname(os.path.abspath('.'))
             config_file = os.path.join(sourcecode_dir, 'GAN/configs/config_imagenet_ocdc.yaml')
             config = get_config(config_file)
@@ -120,18 +129,15 @@ class ORCADataset(Dataset):
         if len(self.used_images) <= 1:
             logger.info("Epoch: '{}' augmentation {} {}".format(self.epoch, self.augmentation_strategy,
                                                                 augmentation_operations))
-        
+
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, should_augment)
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, False)
         x, y, used_augmentations = data_augmentation(image, target_img, mask, self.img_input_size, self.img_output_size, augmentation_operations, GAN_model, self.use_cuda)
+        logger.info("Used augmentation(s): {}".format(used_augmentations))
         return x, y, fname, image.size
 
 
 def load_dataset(img_dir, img_input_size, dataset_type):
-
-    #first_train = ""
-    #with open("application.log", 'r') as file:
-    #    first_train = file.read()
 
     images = []
     classes = ["tumor"]
