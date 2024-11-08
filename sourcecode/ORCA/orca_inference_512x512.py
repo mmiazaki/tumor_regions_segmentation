@@ -6,7 +6,7 @@ root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
 from sourcecode.ORCA.orca_train import *
-from sourcecode.ORCA.orca_dataloader_512x512 import *
+from sourcecode.Utils.orca_load_dataset_512x512 import *
 
 import torchvision.transforms.functional as TF
 from torchvision import transforms

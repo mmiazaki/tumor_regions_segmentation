@@ -1,5 +1,4 @@
-from sourcecode.results_utils import *
-from sourcecode.evaluation_utils import *
+from sourcecode.Utils.results_utils import *
 
 if __name__ == '__main__':
     execute1 = False

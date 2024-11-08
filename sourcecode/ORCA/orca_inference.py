@@ -1,6 +1,5 @@
 import os
 import sys
-import matplotlib.pyplot as plt
 
 import torchvision.transforms.functional as TF
 from torchvision import utils
@@ -12,8 +11,8 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.unet_model import *
-from sourcecode.wsi_image_utils import *
+from sourcecode.Utils.unet_model import *
+from sourcecode.Utils.wsi_image_utils import *
 
 torch.cuda.empty_cache()
 gc.collect()
@@ -152,7 +151,7 @@ else:
                                                                                         len(heat_grid)))
                     logger.info("-")
 
-from sourcecode.wsi_image_utils import *
+from sourcecode.Utils.wsi_image_utils import *
 
 import os
 import seaborn as sns
@@ -256,12 +255,10 @@ for cls in classes:
                                  original_img_path.replace("{}.png".format(wsi_image_number),
                                                            "{}_heatmap_gray.png".format(wsi_image_number)))
 
-from sourcecode.wsi_image_utils import *
+from sourcecode.Utils.wsi_image_utils import *
 
 import os
 import csv
-import seaborn as sns
-import matplotlib.pyplot as plt
 from matplotlib.colors import *
 
 import torchvision.transforms.functional as TF
@@ -359,14 +356,13 @@ for cls in classes:
                 # utils.save_image(TF.to_tensor(np_to_pil(np_heatmap_convex)), heatmap_gray_path.replace("_gray", "_gray_threshold_{}_convex".format(threshold_prob)))
 
 from sourcecode.ORCA.orca_train import *
-from sourcecode.ORCA.orca_dataloader import *
+from sourcecode.Utils.oscc_dataloader import *
 
 import torchvision.transforms.functional as TF
 from torchvision import transforms
 from torchvision import utils
 from datetime import datetime
 
-from scipy import ndimage as nd
 from skimage import measure
 
 dataset_dir = "../../datasets/ORCA"

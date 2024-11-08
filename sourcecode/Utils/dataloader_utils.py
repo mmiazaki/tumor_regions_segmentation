@@ -2,21 +2,19 @@ import os
 import sys
 import torch
 import torch.nn as nn
-import torchvision.utils as vutils
 import torchvision.transforms.functional as TF
 
 import random
 import matplotlib.pyplot as plt
 import albumentations as A
 
-current_path = os.path.abspath('.')
+current_path = os.path.abspath('..')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.wsi_image_utils import *
-from sourcecode.logger_utils import *
-from sourcecode.GAN.model.networks import Generator
-from sourcecode.GAN.utils.tools import get_config, random_bbox, mask_image, is_image_file, default_loader, normalize, get_model_list
+from sourcecode.Utils.wsi_image_utils import *
+from sourcecode.Utils.logger_utils import *
+from sourcecode.Utils.GAN.utils.tools import get_config, random_bbox, mask_image
 from torchvision import transforms
 
 
@@ -110,7 +108,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
                      'RandomToneCurve', 'Solarize', 'Spatter', 'Superpixels', 'ToGray', 'ToSepia', 'UnsharpMask',]
         for a in aug:
             if a in aug_pixel and (len(aug) < 2 or random.random() > 0.5):
-                augmented = getattr(A, a)(always_apply=True)(image=np.array(image))
+                augmented = getattr(A, a)(p=1)(image=np.array(image))
                 image = Image.fromarray(augmented['image'])
                 used_augmentations.append(a)
 
@@ -121,8 +119,7 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
                        'SmallestMaxSize', 'XYMasking',]
         for a in aug:
             if a in aug_spatial and (len(aug) < 2 or random.random() > 0.5):
-                augmented = getattr(A, a)(always_apply=True)(image=np.array(image), mask=np.array(
-                                                                                     mask) if mask is not None else np.zeros(
+                augmented = getattr(A, a)(p=1)(image=np.array(image), mask=np.array(mask) if mask is not None else np.zeros(
                                                                                      img_output_size))
                 image = Image.fromarray(augmented['image'])
                 mask = Image.fromarray(augmented['mask'])
@@ -132,23 +129,21 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
         aug_pixel_ref = ['FDA', 'PixelDistributionAdaptation']
         for a in aug:
             if a in aug_pixel_ref and (len(aug) < 2 or random.random() > 0.5):
-                augmented = getattr(A, a)(reference_images=[target_img], always_apply=True, read_fn=lambda x: x)(image=np.array(image))
+                augmented = getattr(A, a)(p=1, reference_images=[target_img], read_fn=lambda x: x)(image=np.array(image))
                 image = Image.fromarray(augmented['image'])
                 used_augmentations.append(a)
 
         # Pixel-level transforms with templates
-        aug_pixel_ref = ['TemplateTransform']
-        for a in aug:
-            if a in aug_pixel_ref and (len(aug) < 2 or random.random() > 0.5):
-                augmented = getattr(A, a)(templates=[target_img], always_apply=True)(image=np.array(image))
-                image = Image.fromarray(augmented['image'])
-                used_augmentations.append(a)
+        if 'TemplateTransform' in aug and (len(aug) < 2 or random.random() > 0.5):
+            augmented = A.TemplateTransform(p=1, templates=[target_img])(image=np.array(image))
+            image = Image.fromarray(augmented['image'])
+            used_augmentations.append('TemplateTransform')
 
         # Inpainting augmentation
         if "inpainting" in aug and (len(aug) < 2 or random.random() > 0.5):
             
             width, height = image.size
-            sourcecode_dir = os.path.dirname(os.path.abspath('.'))
+            sourcecode_dir = os.path.dirname(os.path.abspath('..'))
             config_file = os.path.join(sourcecode_dir, 'GAN/configs/config_imagenet_ocdc.yaml')
             config = get_config(config_file)
 

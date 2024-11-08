@@ -15,12 +15,12 @@ __pycache__
 /datasets/*/training/*_latex*
 /models/
 .vscode/settings.json
-/sourcecode/GAN/checkpoints/**/results*/**
-/sourcecode/GAN/checkpoints/**/events.*
+/sourcecode/Utils/GAN/checkpoints/**/results*/**
+/sourcecode/Utils/GAN/checkpoints/**/events.*
 /sourcecode/GAN/checkpoints/**/*.log
 /sourcecode/GAN/checkpoints/**/*.pt
 /sourcecode/GAN/checkpoints/**/*.png
-/sourcecode/GAN/examples/**
+/sourcecode/Utils/GAN/examples/**
 **.amlignore*
 !gen_00430000.pt
 *.csv

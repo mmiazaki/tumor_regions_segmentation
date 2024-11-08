@@ -7,8 +7,7 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.ORCA.orca_dataloader_512x512 import *
-from sourcecode.train_utils import *
+from sourcecode.Utils.train_utils import *
 
 
 activate_loss         = [1]

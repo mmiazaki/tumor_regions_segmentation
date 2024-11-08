@@ -5,20 +5,20 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.dataloader_utils import *
+from sourcecode.Utils.oscc_dataloader import OSCCDataset
+from sourcecode.Utils.dataloader_utils import *
 
-from torch.utils.data import Dataset
 from sklearn.model_selection import train_test_split
 
 import os.path
 
 
-class OCDCDataset(Dataset):
+class ORCADataset512X512(OSCCDataset):
 
     def __init__(self,
-                 img_dir="../../datasets/OCDC",
-                 img_input_size=(640, 640),
-                 img_output_size=(640, 640),
+                 img_dir="../../datasets/ORCA_512x512",
+                 img_input_size=(512, 512),
+                 img_output_size=(512, 512),
                  dataset_type="training",
                  augmentation=None,
                  augmentation_strategy="random",
@@ -32,7 +32,7 @@ class OCDCDataset(Dataset):
         self.augmentation = augmentation
         self.augmentation_strategy = augmentation_strategy
         self.color_model = color_model
-        self.samples = load_dataset(img_dir, img_input_size, dataset_type)
+        self.samples = load_dataset(img_dir, dataset_type)
         self.used_images = set()
         self.epoch = start_epoch
         self.use_cuda = use_cuda
@@ -88,6 +88,14 @@ class OCDCDataset(Dataset):
             idx = (self.epoch-2) % len(augmentations)
             augmentation_operations.append(augmentations[idx])
 
+        elif 'solo' in self.augmentation_strategy:
+
+            augmentations = self.augmentation.copy()
+            if None in augmentations:
+                augmentations.remove(None)
+            augmentation_operations.append(augmentations[0])
+
+
 
         if self.epoch > 1 and augmentation_operations is not None and 'color_transfer' in augmentation_operations:
 
@@ -97,7 +105,7 @@ class OCDCDataset(Dataset):
 
         if self.epoch > 1 and augmentation_operations is not None and 'inpainting' in augmentation_operations:
 
-            # Prepares the GAN model            
+            # Prepares the GAN model
             sourcecode_dir = os.path.dirname(os.path.abspath('.'))
             config_file = os.path.join(sourcecode_dir, 'GAN/configs/config_imagenet_ocdc.yaml')
             config = get_config(config_file)
@@ -120,18 +128,15 @@ class OCDCDataset(Dataset):
         if len(self.used_images) <= 1:
             logger.info("Epoch: '{}' augmentation {} {}".format(self.epoch, self.augmentation_strategy,
                                                                 augmentation_operations))
-        
+
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, should_augment)
         #x, y = data_augmentation(image, mask, self.img_input_size, self.img_output_size, False)
         x, y, used_augmentations = data_augmentation(image, target_img, mask, self.img_input_size, self.img_output_size, augmentation_operations, GAN_model, self.use_cuda)
+        logger.info("Used augmentation(s): {}".format(used_augmentations))
         return x, y, fname, image.size
 
 
-def load_dataset(img_dir, img_input_size, dataset_type):
-
-    #first_train = ""
-    #with open("application.log", 'r') as file:
-    #    first_train = file.read()
+def load_dataset(img_dir, dataset_type):
 
     images = []
     classes = ["tumor"]
@@ -142,36 +147,29 @@ def load_dataset(img_dir, img_input_size, dataset_type):
 
         for cls in sorted([cls for cls in d if cls in classes]):
 
-            class_root_dir = "{}/{}/patch/{}x{}".format(dataset_root_dir, cls, img_input_size[0], img_input_size[1])
+            original_dir = "{}/{}/tma".format(dataset_root_dir, cls)
+            mask_dir = "{}/lesion_annotations".format(dataset_root_dir)
 
-            for _, img_dir, _ in sorted(os.walk(class_root_dir)):
+            for dirpath, dirnames, filenames in sorted(os.walk(original_dir)):
+                for fname in sorted(filenames):
 
-                for img_number in sorted(img_n for img_n in img_dir):
+                    path_img = os.path.join(original_dir, fname)
+                    path_mask = os.path.join(mask_dir, fname.replace(".png", "_mask.png"))
 
-                    for patch_type in ["01-roi", "02-non_roi"]:
-
-                        original_dir = "{}/{}/{}/01-original".format(class_root_dir, img_number, patch_type)
-                        mask_dir = "{}/{}/{}/02-mask".format(class_root_dir, img_number, patch_type)
-                        for _, _, fnames in sorted(os.walk(original_dir)):
-                            for fname in sorted(fnames):
-
-                                path_img = os.path.join(original_dir, fname)
-                                path_mask = os.path.join(mask_dir, fname)
-
-                                #if is_valid_file(path_img) and first_train.find(fname) < 0:
-                                if is_valid_file(path_img):
-                                    item = (path_img, path_mask, fname)
-                                    images.append(item)
+                    #if is_valid_file(path_img) and first_train.find(fname) < 0:
+                    if is_valid_file(path_img):
+                        item = (path_img, path_mask, fname)
+                        images.append(item)
     #first_train = ""
     return images
 
 
-def create_dataloader(tile_size="640x640",
+def create_dataloader(tile_size="512x512",
                       batch_size=1,
                       shuffle=False,
-                      img_input_size=(640, 640),
-                      img_output_size=(640, 640),
-                      dataset_dir="../../datasets/OCDC",
+                      img_input_size=(512, 512),
+                      img_output_size=(512, 512),
+                      dataset_dir="../../datasets/ORCA_512x512",
                       color_model="LAB",
                       augmentation=None,
                       augmentation_strategy="random",
@@ -183,7 +181,7 @@ def create_dataloader(tile_size="640x640",
         augmentation = [None, "horizontal_flip", "vertical_flip", "rotation", "transpose", "elastic_transformation",
                         "grid_distortion", "optical_distortion", "color_transfer", "inpainting"]
 
-    image_datasets = {x: OCDCDataset(img_dir=dataset_dir,
+    image_datasets = {x: ORCADataset512X512(img_dir=dataset_dir,
                                             img_input_size=img_input_size, img_output_size=img_output_size,
                                             dataset_type='testing' if x == 'test' else 'training',
                                             augmentation=augmentation,

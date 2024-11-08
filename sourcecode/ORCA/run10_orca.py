@@ -11,8 +11,8 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.ORCA.orca_dataloader import *
-from sourcecode.unet_model import *
+from sourcecode.Utils.oscc_dataloader import *
+from sourcecode.Utils.unet_model import *
 
 
 def train_model_with_validation(dataloaders,

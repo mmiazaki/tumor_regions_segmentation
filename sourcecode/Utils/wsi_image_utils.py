@@ -18,7 +18,7 @@ import skimage.filters as sk_filters
 import skimage.morphology as sk_morphology
 
 
-from sourcecode.logger_utils import *
+from sourcecode.Utils.logger_utils import *
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from openslide import OpenSlideError
 from skimage import measure

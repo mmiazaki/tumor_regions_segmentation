@@ -6,7 +6,7 @@ import csv
 import torch.optim as optim
 from torch.autograd import Variable
 
-from sourcecode.unet_model import *
+from sourcecode.Utils.unet_model import *
 
 
 
@@ -76,7 +76,7 @@ def train_model_with_validation(dataloaders,
     with open(result_file_csv, mode='a+') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(
-            ['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'time',
+            ['model', 'augmentation', 'phase', 'epoch', 'loss', 'accuracy', 'TP', 'TN', 'FP', 'FN', 'date', 'time(sec)',
              'transformations'])
 
     criterion = get_loss_function(loss_function, device)

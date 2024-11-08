@@ -11,7 +11,7 @@ root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
 from sourcecode.CAMELYON16.camelyon16_dataloader import *
-from sourcecode.unet_model import *
+from sourcecode.Utils.unet_model import *
 
 
 def train_model(dataloaders,

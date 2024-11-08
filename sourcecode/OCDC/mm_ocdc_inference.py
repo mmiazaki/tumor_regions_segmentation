@@ -5,11 +5,10 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.unet_model import *
-from sourcecode.wsi_image_utils import *
+from sourcecode.Utils.unet_model import *
+from sourcecode.Utils.wsi_image_utils import *
 
 import os
-import matplotlib.pyplot as plt
 
 import torchvision.transforms.functional as TF
 from torchvision import utils

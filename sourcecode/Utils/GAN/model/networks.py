@@ -7,7 +7,7 @@ from PIL import Image
 from torchvision import transforms
 from torchvision import utils as vutils
 
-from sourcecode.GAN.utils.tools import extract_image_patches, flow_to_image, reduce_mean, reduce_sum, default_loader, same_padding
+from sourcecode.Utils.GAN.utils.tools import extract_image_patches, flow_to_image, reduce_mean, reduce_sum, default_loader, same_padding
 
 
 class Generator(nn.Module):
@@ -353,7 +353,6 @@ class ContextualAttention(nn.Module):
 
 
 def test_contextual_attention(args):
-    import cv2
     import os
     # run on cpu
     os.environ['CUDA_VISIBLE_DEVICES'] = '2'

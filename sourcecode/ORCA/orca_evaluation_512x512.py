@@ -1,15 +1,11 @@
 import os
 import sys
-import csv
 
 current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from skimage import measure
-from sourcecode.ORCA.orca_dataloader_512x512 import *
-from sourcecode.wsi_image_utils import *
-from sourcecode.evaluation_utils import *
+from sourcecode.Utils.evaluation_utils import *
 
 
 dataset_dir = "../../datasets/ORCA_512x512"

@@ -4,7 +4,7 @@ import time
 import shutil
 import sys
 
-current_path = os.path.abspath('.')
+current_path = os.path.abspath('')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
@@ -50,8 +50,8 @@ def main():
     # Configure checkpoint path
     if not args.checkpoint_path:
         checkpoint_path = os.path.join('checkpoints',
-                                        config['dataset_name'],
-                                        config['mask_type'] + '_' + config['expname'])
+                                       config['dataset_name'],
+                                       config['mask_type'] + '_' + config['expname'])
     else:
         checkpoint_path = args.checkpoint_path
 

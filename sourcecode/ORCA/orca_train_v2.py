@@ -5,8 +5,9 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.ORCA.orca_dataloader import *
-from sourcecode.train_utils import *
+from sourcecode.Utils.oscc_dataloader import *
+from sourcecode.Utils.train_utils import *
+from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
 # loads our u-net based model to continue previous training
@@ -21,7 +22,7 @@ patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="4999_ORCA640" # prefix name used in the model file
+dataset_name="4999_ORCA" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -127,7 +128,8 @@ model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
 ################################################################################################################
 
 # load images
-dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_size[1]),
+dataloaders = create_dataloader(samples_function=orca_load_dataset,
+                                tile_size="{}x{}".format(patch_size[0], patch_size[1]),
                                 batch_size=batch_size,
                                 shuffle=False,
                                 img_input_size=patch_size,

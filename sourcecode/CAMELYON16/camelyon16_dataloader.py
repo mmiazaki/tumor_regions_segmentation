@@ -1,4 +1,4 @@
-from sourcecode.dataloader_utils import *
+from sourcecode.Utils.dataloader_utils import *
 
 from PIL import ImageColor
 from torch.utils.data import Dataset
@@ -9,8 +9,8 @@ import os.path
 import pandas as pd
 import xml.etree.ElementTree as et
 
-from sourcecode.wsi_image_utils import *
-from sourcecode.logger_utils import *
+from sourcecode.Utils.wsi_image_utils import *
+from sourcecode.Utils.logger_utils import *
 
 
 class Camelyon16Dataset(Dataset):
