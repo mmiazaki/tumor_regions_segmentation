@@ -102,10 +102,10 @@ class OSCCDataset(Dataset):
         if self.epoch > 1 and augmentation_operations is not None and 'inpainting' in augmentation_operations:
 
             # Prepares the GAN model
-            sourcecode_dir = os.path.abspath('.')
-            config_file = os.path.join(sourcecode_dir, 'GAN/configs/config_imagenet_ocdc.yaml')
+            sourcecode_dir = os.path.abspath('..')
+            config_file = os.path.join(sourcecode_dir, 'Utils/GAN/configs/config_imagenet_ocdc.yaml')
             config = get_config(config_file)
-            checkpoint_path = os.path.join(sourcecode_dir, 'GAN/checkpoints', config['dataset_name'], config['mask_type'] + '_' + config['expname'])
+            checkpoint_path = os.path.join(sourcecode_dir, 'Utils/GAN/checkpoints', config['dataset_name'], config['mask_type'] + '_' + config['expname'])
 
             if self.use_cuda:
                 cuda = config['cuda'] and torch.cuda.is_available()

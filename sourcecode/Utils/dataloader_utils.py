@@ -143,8 +143,9 @@ def data_augmentation(input_image, target_img, output_mask, img_input_size=(640,
         if "inpainting" in aug and (len(aug) < 2 or random.random() > 0.5):
             
             width, height = image.size
-            sourcecode_dir = os.path.dirname(os.path.abspath('..'))
-            config_file = os.path.join(sourcecode_dir, 'GAN/configs/config_imagenet_ocdc.yaml')
+            #sourcecode_dir = os.path.dirname(os.path.abspath('..'))
+            sourcecode_dir = os.path.abspath('..')
+            config_file = os.path.join(sourcecode_dir, 'Utils/GAN/configs/config_imagenet_ocdc.yaml')
             config = get_config(config_file)
 
             # Setting the points for cropped image
