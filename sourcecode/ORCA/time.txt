@@ -13,4 +13,10 @@ id   it CPU   time       accuracy           finish date
 4000 03 HOME2 (parou na  34)
 7000 03 HOME3 (parou na 243) OK
 
+4005 04 UFU
+---- 04 HOME1
+---- 04 HOME2
+7005 04 HOME3
+
+
 7004 >> Obs.: foi parado na epoca 14
