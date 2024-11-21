@@ -7,21 +7,22 @@ sys.path.append(root_path)
 
 from sourcecode.Utils.oscc_dataloader import *
 from sourcecode.Utils.train_utils import *
+from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
 # loads our u-net based model to continue previous training
-#trained_model_version = "ORCA_640x640_Epoch-400_Images-100_Batch-1_random_9_operations" # file name without extension .pth
-trained_model_version = None # starts the training from scratch
+trained_model_version = "4004_ORCA_640x640_Epoch-55_Images-4181_Batch-1_BCELoss_Adam_inpainting_augmentation" # file name without extension .pth
+#trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
-start_epoch = 1
+start_epoch = 56
 n_epochs = 100
 batch_size = 1
 patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="4004_ORCA640" # prefix name used in the model file
+dataset_name="4004_ORCA" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -127,7 +128,8 @@ model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
 ################################################################################################################
 
 # load images
-dataloaders = create_dataloader(tile_size="{}x{}".format(patch_size[0], patch_size[1]),
+dataloaders = create_dataloader(samples_function=orca_load_dataset,
+                                tile_size="{}x{}".format(patch_size[0], patch_size[1]),
                                 batch_size=batch_size,
                                 shuffle=False,
                                 img_input_size=patch_size,
