@@ -11,8 +11,8 @@ from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-trained_model_version = "4000_ORCA640_640x640_Epoch-100_Images-4181_Batch-1_BCELoss_Adam_random_8_operations"
-#trained_model_version = None # starts the training from scratch
+#trained_model_version = "4000_ORCA640_640x640_Epoch-100_Images-4181_Batch-1_BCELoss_Adam_random_8_operations"
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
 start_epoch = 1
@@ -22,7 +22,7 @@ patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="7005t_OCDC" # prefix name used in the model file
+dataset_name="7008_OCDC" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -115,7 +115,7 @@ augmentation = [None,
 
 ### Directories and files ###
 dataset_dir = "../../datasets/OCDC"
-model_dir = "../../models"
+model_dir = "../../models/ORCA4000"
 result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
 ### Model saving frequency

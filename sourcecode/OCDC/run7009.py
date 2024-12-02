@@ -10,8 +10,8 @@ from sourcecode.Utils.train_utils import *
 from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
-# loads our u-net based model to continue previous training
-#trained_model_version = "OCDC_640x640_Epoch-400_Images-840_Batch-1_random_8_operations" # file name without extension .pth
+# loads u-net based model to continue previous training (file name without extension .pth)
+#trained_model_version = "4000_ORCA640_640x640_Epoch-100_Images-4181_Batch-1_BCELoss_Adam_random_8_operations"
 trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
@@ -22,7 +22,7 @@ patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="7004_OCDC" # prefix name used in the model file
+dataset_name="7009_OCDC" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
@@ -32,7 +32,7 @@ optimizer_algorithm="Adam"
 # "standard"               : it uses all augmentations, sequentially one by one in each epoch
 # "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
 # "solo"                   : it just uses the first available augmentation in the list (not None)
-augmentation_strategy = "inpainting_augmentation"
+augmentation_strategy = "random"
 
 augmentation = [None,
                 "horizontal_flip",
@@ -115,14 +115,14 @@ augmentation = [None,
 
 ### Directories and files ###
 dataset_dir = "../../datasets/OCDC"
-model_dir = "../../models"
+model_dir = "../../models/ORCA4000"
 result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
 ### Model saving frequency
 #model_saving_frequency = None          # No save
-#model_saving_frequency = ('all', 0)    # Save all
+model_saving_frequency = ('all', 0)    # Save all
 #model_saving_frequency = ('every', 10) # Save every 10 epochs
-model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
+#model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
 
 
 ################################################################################################################
