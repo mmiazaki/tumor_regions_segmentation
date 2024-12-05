@@ -19,7 +19,7 @@ id   it CPU   time       accuracy           finish date
 7005 04 HOME3 (parou na 166)				OK
 
 === 02/12/2024 ===
-7006 05 HOME1
-7007 05 HOME2
-7008 05 HOME3
+7006 05 HOME1 (parou na 130)
+7007 05 HOME2 (parou na 126)
+7008 05 HOME3 (parou na 130)
 7009 05 UFU

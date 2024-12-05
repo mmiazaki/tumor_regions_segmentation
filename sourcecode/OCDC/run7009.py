@@ -115,7 +115,7 @@ augmentation = [None,
 
 ### Directories and files ###
 dataset_dir = "../../datasets/OCDC"
-model_dir = "../../models/ORCA4000"
+model_dir = "../../models"
 result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
 ### Model saving frequency
