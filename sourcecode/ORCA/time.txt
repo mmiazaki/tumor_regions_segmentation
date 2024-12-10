@@ -22,4 +22,10 @@ id   it CPU   time       accuracy           finish date
 7006 05 HOME1 (parou na 130)
 7007 05 HOME2 (parou na 126)
 7008 05 HOME3 (parou na 130)
-7009 05 UFU
+7009 05 UFU    7279m 29s 0.9725181884765629 2024-12-07 12:07:58,890
+
+=== 10/12/2024 ===
+4006 06 HOME1 
+4007 06 HOME2 
+4008 06 HOME3 
+4009 06 UFU   
