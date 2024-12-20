@@ -11,11 +11,11 @@ from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-#trained_model_version = "7000_OCDC_640x640_Epoch-400_Images-840_Batch-1_BCELoss_Adam_random_8_operations"
-trained_model_version = None # starts the training from scratch
+trained_model_version = "4006_ORCA_640x640_Epoch-84_Images-4181_Batch-1_BCELoss_Adam_random_8_operations"
+#trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
-start_epoch = 1
+start_epoch = 85
 n_epochs = 100
 batch_size = 1
 patch_size = (640, 640)
