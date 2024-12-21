@@ -28,4 +28,4 @@ id   it CPU   time       accuracy           finish date
 4006 06 HOME1 (parou na 48)
 4007 06 HOME2 (parou na 48)
 4008 06 HOME3 (parou na 48)
-4009 06 UFU   
+4009 06 UFU   (completou contínuo, mas esqueci de salvar os dados)

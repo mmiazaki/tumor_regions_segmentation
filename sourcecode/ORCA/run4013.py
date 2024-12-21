@@ -22,8 +22,8 @@ patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="4010_ORCA" # prefix name used in the model file
-loss_function="L1Loss" # BCELoss, L1Loss, SmoothL1Loss, MSELoss, HuberLoss
+dataset_name="4013_ORCA" # prefix name used in the model file
+loss_function="SmoothL1Loss" # BCELoss, L1Loss, SmoothL1Loss, MSELoss, HuberLoss
 optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation

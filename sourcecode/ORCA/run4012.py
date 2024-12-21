@@ -22,8 +22,8 @@ patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="4010_ORCA" # prefix name used in the model file
-loss_function="L1Loss" # BCELoss, L1Loss, SmoothL1Loss, MSELoss, HuberLoss
+dataset_name="4012_ORCA" # prefix name used in the model file
+loss_function="BCELoss" # BCELoss, L1Loss, SmoothL1Loss, MSELoss, HuberLoss
 optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation
@@ -32,18 +32,18 @@ optimizer_algorithm="Adam"
 # "standard"               : uses one augmentation each epoch, one by one following the list
 # "random"                 : all augmentations have 50% chance to be applied in the same epoch
 # "solo"                   : only uses the first available augmentation in the list (not None)
-augmentation_strategy = "random"
+augmentation_strategy = "standard"
 
 augmentation = [None,
-                "horizontal_flip",
-                "vertical_flip",
-                "rotation",
-                "transpose",
+                #"horizontal_flip",
+                #"vertical_flip",
+                #"rotation",
+                #"transpose",
                 #"elastic_transformation",
                 "grid_distortion",
                 "optical_distortion",
-                "color_transfer",
-                "inpainting",
+                #"color_transfer",
+                #"inpainting",
                 #'CLAHE',
                 #'Downscale',
                 #'Equalize',
