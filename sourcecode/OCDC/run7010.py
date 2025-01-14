@@ -11,7 +11,7 @@ from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-#trained_model_version = "7000_OCDC_640x640_Epoch-400_Images-840_Batch-1_BCELoss_Adam_random_8_operations"
+#trained_model_version = "OCDC_Epoch-10"
 trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
@@ -120,9 +120,9 @@ result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".
 
 ### Model saving frequency
 #model_saving_frequency = None          # No save
-model_saving_frequency = ('all', 0)    # Save all
+#model_saving_frequency = ('all', 0)    # Save all
 #model_saving_frequency = ('every', 10) # Save every 10 epochs
-#model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
+model_saving_frequency = ('last', 2)    # Save just the last 2 epochs
 
 
 ################################################################################################################

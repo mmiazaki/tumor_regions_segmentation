@@ -11,19 +11,19 @@ from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-trained_model_version = "4016_ORCA_640x640_Epoch-32_Images-4181_Batch-1_L1Loss_Adam_horizontal_flip"
-#trained_model_version = None # starts the training from scratch
+#trained_model_version = "OCDC"
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
-start_epoch = 33
-n_epochs = 100
+start_epoch = 1
+n_epochs = 400
 batch_size = 1
 patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="4016_ORCA" # prefix name used in the model file
-loss_function="L1Loss" # BCELoss, L1Loss, SmoothL1Loss, MSELoss, HuberLoss
+dataset_name="7125_OCDC" # prefix name used in the model file
+loss_function="BCELoss" # BCELoss, L1Loss, SmoothL1Loss, MSELoss, HuberLoss
 optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation
@@ -35,7 +35,7 @@ optimizer_algorithm="Adam"
 augmentation_strategy = "solo"
 
 augmentation = [None,
-                "horizontal_flip",
+                #"horizontal_flip",
                 #"vertical_flip",
                 #"rotation",
                 #"transpose",
@@ -62,7 +62,7 @@ augmentation = [None,
                 #'ZoomBlur',
                 #'Morphological',
                 #'PixelDropout',
-                #'Rotate',
+                'Rotate',
                 #'SafeRotate',
                 #'Perspective',
                 #'ShiftScaleRotate',
@@ -114,7 +114,7 @@ augmentation = [None,
                 ]
 
 ### Directories and files ###
-dataset_dir = "../../datasets/ORCA"
+dataset_dir = "../../datasets/OCDC"
 model_dir = "../../models"
 result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
@@ -122,7 +122,7 @@ result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".
 #model_saving_frequency = None          # No save
 #model_saving_frequency = ('all', 0)    # Save all
 #model_saving_frequency = ('every', 10) # Save every 10 epochs
-model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
+model_saving_frequency = ('last', 2)    # Save just the last 2 epochs
 
 
 ################################################################################################################
