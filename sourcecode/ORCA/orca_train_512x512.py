@@ -10,8 +10,8 @@ from sourcecode.Utils.train_utils import *
 from sourcecode.Utils.orca_load_dataset_512x512 import *
 
 ### Model ###
-# loads our u-net based model to continue previous training
-#trained_model_version = "ORCA_512x512_Epoch-400_Images-100_Batch-1_random_9_operations" # file name without extension .pth
+# loads u-net based model to continue previous training (file name without extension .pth)
+#trained_model_version = "ORCA"
 trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
@@ -22,16 +22,16 @@ patch_size = (512, 512)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="999_ORCA512" # prefix name used in the model file
+dataset_name="9999_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation
 # "color_augmentation"     : color transfer augmentation
 # "inpainting_augmentation": inpainting augmentation
-# "standard"               : it uses all augmentations, sequentially one by one in each epoch
-# "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
-# "solo"                   : it just uses the first available augmentation in the list (not None)
+# "standard"               : uses one augmentation each epoch, one by one following the list
+# "random"                 : all augmentations have 50% chance to be applied in the same epoch
+# "solo"                   : only uses the first available augmentation in the list (not None)
 augmentation_strategy = "solo"
 
 augmentation = [None,
@@ -122,7 +122,7 @@ result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".
 #model_saving_frequency = None          # No save
 #model_saving_frequency = ('all', 0)    # Save all
 #model_saving_frequency = ('every', 10) # Save every 10 epochs
-model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
+model_saving_frequency = ('last', 2)    # Save just the last 3 epochs
 
 
 ################################################################################################################
