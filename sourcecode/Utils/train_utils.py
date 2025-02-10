@@ -23,6 +23,7 @@ def get_loss_function(loss_function, device = "cuda"):
         case 'SmoothL1Loss':
             return nn.SmoothL1Loss().to(device)
         case _:
+            logger.info("Invalid Loss Function")
             return None
     # Loss Functions that didn't work well (odd results):
     # - nn.PoissonNLLLoss().to(device)
@@ -35,9 +36,29 @@ def get_optimizer(optimizer, model_parameters):
     match optimizer:
         case 'Adam':
             return optim.Adam(model_parameters)
+        case 'Adadelta':
+            return optim.Adam(model_parameters)
+        case 'Adagrad':
+            return optim.Adam(model_parameters)
+        case 'AdamW':
+            return optim.Adam(model_parameters)
+        case 'Adamax':
+            return optim.Adam(model_parameters)
+        case 'ASGD':
+            return optim.Adam(model_parameters)
+        case 'NAdam':
+            return optim.Adam(model_parameters)
+        case 'RAdam':
+            return optim.Adam(model_parameters)
+        case 'RMSprop':
+            return optim.Adam(model_parameters)
+        case 'Rprop':
+            return optim.Adam(model_parameters)
+        case 'SGD':
+            return optim.Adam(model_parameters)
         case _:
+            logger.info("Invalid Optimizer")
             return None
-
 
 
 def train_model_with_validation(dataloaders,
