@@ -1,12 +1,4 @@
-python run7010.py
-python run7014.py
-python run7015.py
-python run7103.py
-python run7107.py
-python run7111.py
-python run7115.py
-python run7119.py
-python run7123.py
-python run7127.py
-python run7128.py
-python run7129.py
+python3 run7115.py
+python3 run7119.py
+python3 run7123.py
+python3 run7127.py
