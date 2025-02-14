@@ -32,18 +32,18 @@ optimizer_algorithm="Adamax" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAd
 # "standard"               : uses one augmentation each epoch, one by one following the list
 # "random"                 : all augmentations have 50% chance to be applied in the same epoch
 # "solo"                   : only uses the first available augmentation in the list (not None)
-augmentation_strategy = "random"
+augmentation_strategy = "standard"
 
 augmentation = [None,
-                "horizontal_flip",
-                "vertical_flip",
-                "rotation",
-                "transpose",
+                #"horizontal_flip",
+                #"vertical_flip",
+                #"rotation",
+                #"transpose",
                 #"elastic_transformation",
                 "grid_distortion",
                 "optical_distortion",
-                "color_transfer",
-                "inpainting",
+                #"color_transfer",
+                #"inpainting",
                 #'CLAHE',
                 #'Downscale',
                 #'Equalize',
