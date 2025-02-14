@@ -22,7 +22,7 @@ patch_size = (512, 512)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="1009_ORCA512" # prefix name used in the model file
+dataset_name="1069_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="SGD" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam, RAdam, RMSprop, Rprop, SGD
 

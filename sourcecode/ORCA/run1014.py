@@ -22,7 +22,7 @@ patch_size = (512, 512)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="1004_ORCA512" # prefix name used in the model file
+dataset_name="1014_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="ASGD" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam, RAdam, RMSprop, Rprop, SGD
 
@@ -32,7 +32,7 @@ optimizer_algorithm="ASGD" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam
 # "standard"               : uses one augmentation each epoch, one by one following the list
 # "random"                 : all augmentations have 50% chance to be applied in the same epoch
 # "solo"                   : only uses the first available augmentation in the list (not None)
-augmentation_strategy = "random"
+augmentation_strategy = "standard"
 
 augmentation = [None,
                 "horizontal_flip",
