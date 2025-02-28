@@ -145,7 +145,7 @@ for loss_function in list_loss:
                 augmentation = ["paper_augmentations"]
                 nloop = 1
             elif augmentation_strategy == "solo":
-                augmentation = all_augmentations
+                augmentation = all_augmentations[1:len(all_augmentations)]
                 nloop = len(augmentation)
             else:
                 augmentation = ["None"]
@@ -159,6 +159,53 @@ for loss_function in list_loss:
                                                                                                        optimizer_algorithm)
                 print("{} {} {} {} {}".format(dataset_name, loss_function, optimizer_algorithm, augmentation_strategy, augmentation[i]))
 
+
+
+
+
+
+
+
+                # load images
+                dataloaders = create_dataloader(samples_function=orca512_load_dataset,
+                                                tile_size="{}x{}".format(patch_size[0], patch_size[1]),
+                                                batch_size=batch_size,
+                                                shuffle=False,
+                                                img_input_size=patch_size,
+                                                img_output_size=patch_size,
+                                                dataset_dir=dataset_dir,
+                                                color_model=color_model,
+                                                augmentation=augmentation,
+                                                augmentation_strategy=augmentation_strategy,
+                                                start_epoch=start_epoch,
+                                                validation_split=0.0,
+                                                use_cuda=use_cuda)
+
+
+                # load a trained model or define model as None
+                if trained_model_version is not None:
+                    trained_model_path = "{}/{}.pth".format(model_dir, trained_model_version)
+                    model = load_model(file_path=trained_model_path, img_input_size=patch_size, use_cuda=True)
+                else:
+                    model = None
+
+
+                # train the model
+                train_model_with_validation(dataloaders=dataloaders,
+                                            model=model,
+                                            patch_size=patch_size,
+                                            n_epochs=n_epochs,
+                                            start_epoch=start_epoch,
+                                            batch_size=batch_size,
+                                            use_cuda=use_cuda,
+                                            output_dir=model_dir,
+                                            augmentation_strategy=augmentation_strategy,
+                                            augmentation_operations=augmentation,
+                                            dataset_name=dataset_name,
+                                            loss_function=loss_function,
+                                            optimizer_algorithm=optimizer_algorithm,
+                                            result_file_csv=result_file_csv,
+                                            model_saving_frequency=model_saving_frequency)
 
 
 
