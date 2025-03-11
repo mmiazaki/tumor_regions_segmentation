@@ -11,20 +11,20 @@ from sourcecode.Utils.orca_load_dataset_512x512 import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-trained_model_version = "1112_ORCA512_512x512_Epoch-146_Images-100_Batch-1_L1Loss_AdamW_inpainting_augmentation"
-#trained_model_version = None # starts the training from scratch
+#trained_model_version = "ORCA"
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
-start_epoch = 147
+start_epoch = 1
 n_epochs = 400
 batch_size = 1
 patch_size = (512, 512)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="1112_ORCA512" # prefix name used in the model file
-loss_function="L1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
-optimizer_algorithm="AdamW" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam, RAdam, RMSprop, Rprop, SGD
+dataset_name="1190_ORCA512" # prefix name used in the model file
+loss_function="SmothL1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+optimizer_algorithm="Adadelta" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam, RAdam, RMSprop, Rprop, SGD
 
 # "no_augmentation"        : without any augmentation
 # "color_augmentation"     : color transfer augmentation
@@ -32,7 +32,7 @@ optimizer_algorithm="AdamW" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAda
 # "standard"               : uses one augmentation each epoch, one by one following the list
 # "random"                 : all augmentations have 50% chance to be applied in the same epoch
 # "solo"                   : only uses the first available augmentation in the list (not None)
-augmentation_strategy = "inpainting_augmentation"
+augmentation_strategy = "standard"
 
 augmentation = [None,
                 "horizontal_flip",
@@ -40,10 +40,10 @@ augmentation = [None,
                 "rotation",
                 "transpose",
                 #"elastic_transformation",
-                "grid_distortion",
-                "optical_distortion",
-                "color_transfer",
-                "inpainting",
+                #"grid_distortion",
+                #"optical_distortion",
+                #"color_transfer",
+                #"inpainting",
                 #'CLAHE',
                 #'Downscale',
                 #'Equalize',
