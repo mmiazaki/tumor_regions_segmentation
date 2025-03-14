@@ -11,7 +11,7 @@ from sourcecode.Utils.orca_load_dataset_512x512 import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-#trained_model_version = "ORCA"
+#trained_model_version = "ORCA512"
 trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
@@ -22,9 +22,9 @@ patch_size = (512, 512)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="9999_ORCA512" # prefix name used in the model file
+dataset_name="1999_ORCA512" # prefix name used in the model file
 loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
-optimizer_algorithm="Adam"
+optimizer_algorithm="Adam" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam, RAdam, RMSprop, Rprop, SGD
 
 # "no_augmentation"        : without any augmentation
 # "color_augmentation"     : color transfer augmentation

@@ -5,14 +5,15 @@ current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
-from sourcecode.ORCA.orca_train import *
+from sourcecode.Utils.oscc_dataloader import *
+from sourcecode.Utils.train_utils import *
 from sourcecode.Utils.orca_load_dataset_512x512 import *
 
 import torchvision.transforms.functional as TF
 from torchvision import transforms
 from torchvision import utils
-from datetime import datetime
 from skimage import measure
+from datetime import datetime, timedelta
 
 dataset_dir = "../../datasets/ORCA_512x512"
 model_dir = "../../models/"
@@ -271,27 +272,27 @@ load_models = [
     # '476_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adam_XYMasking',
     # '271_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adam_inpainting',
     # '276_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adam_ISONoise',
-    '1000_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adadelta_random_8_operations',
-    '1001_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adagrad_random_8_operations',
-    '1002_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_AdamW_random_8_operations',
-    '1003_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adamax_random_8_operations',
-    '1004_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_ASGD_random_8_operations',
-    '1005_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_NAdam_random_8_operations',
-    '1006_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RAdam_random_8_operations',
-    '1007_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RMSprop_random_8_operations',
-    '1008_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Rprop_random_8_operations',
-    '1009_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_SGD_random_8_operations',
-    '1010_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adadelta_standard_8_operations',
-    '1011_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adagrad_standard_8_operations',
-    '1012_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_AdamW_standard_8_operations',
-    '1013_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adamax_standard_8_operations',
-    '1014_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_ASGD_standard_8_operations',
-    '1015_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_NAdam_standard_8_operations',
-    '1016_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RAdam_standard_8_operations',
-    '1017_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RMSprop_standard_8_operations',
-    '1018_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Rprop_standard_8_operations',
-    '1019_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_SGD_standard_8_operations',
-    '1020_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adadelta_no_augmentation',
+    # '1000_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adadelta_random_8_operations',
+    # '1001_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adagrad_random_8_operations',
+    # '1002_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_AdamW_random_8_operations',
+    # '1003_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adamax_random_8_operations',
+    # '1004_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_ASGD_random_8_operations',
+    # '1005_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_NAdam_random_8_operations',
+    # '1006_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RAdam_random_8_operations',
+    # '1007_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RMSprop_random_8_operations',
+    # '1008_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Rprop_random_8_operations',
+    # '1009_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_SGD_random_8_operations',
+    # '1010_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adadelta_standard_8_operations',
+    # '1011_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adagrad_standard_8_operations',
+    # '1012_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_AdamW_standard_8_operations',
+    # '1013_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adamax_standard_8_operations',
+    # '1014_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_ASGD_standard_8_operations',
+    # '1015_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_NAdam_standard_8_operations',
+    # '1016_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RAdam_standard_8_operations',
+    # '1017_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_RMSprop_standard_8_operations',
+    # '1018_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Rprop_standard_8_operations',
+    # '1019_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_SGD_standard_8_operations',
+    # '1020_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adadelta_no_augmentation',
     '1021_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adagrad_no_augmentation',
     '1022_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_AdamW_no_augmentation',
     '1023_ORCA512_512x512_Epoch-400_Images-100_Batch-1_BCELoss_Adamax_no_augmentation',
@@ -371,17 +372,35 @@ load_models = [
     '1097_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_RMSprop_no_augmentation',
     '1098_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Rprop_no_augmentation',
     '1099_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_SGD_no_augmentation',
+    '1100_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adadelta_color_augmentation',
+    '1101_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adagrad_color_augmentation',
+    '1102_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_AdamW_color_augmentation',
+    '1103_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adamax_color_augmentation',
+    '1104_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_ASGD_color_augmentation',
+    '1105_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_NAdam_color_augmentation',
+    '1106_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_RAdam_color_augmentation',
+    '1107_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_RMSprop_color_augmentation',
+    '1108_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Rprop_color_augmentation',
+    '1109_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_SGD_color_augmentation',
+    '1110_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adadelta_inpainting_augmentation',
+    '1111_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adagrad_inpainting_augmentation',
+    '1112_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_AdamW_inpainting_augmentation',
+    '1113_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_Adamax_inpainting_augmentation',
+    '1114_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_ASGD_inpainting_augmentation',
+    '1115_ORCA512_512x512_Epoch-400_Images-100_Batch-1_L1Loss_NAdam_inpainting_augmentation',
     ]
-
 
 
 # Checking for GPU availability
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if use_cuda else "cpu"
-logger.info('Runing on: {}'.format(device))
+logger.info('Running on: {}'.format(device))
 
-for trained_model_version in load_models:
+start_time = start_model_time = time.time()
+
+for i, trained_model_version in enumerate(load_models):
     print(':::::: {} ::::::'.format(trained_model_version))
-    dataloaders = create_dataloader(batch_size=batch_size,
+    dataloaders = create_dataloader(samples_function=orca512_load_dataset,
+                                    batch_size=batch_size,
                                     shuffle=False,
                                     dataset_dir=dataset_dir,
                                     color_model=color_model)
@@ -395,7 +414,8 @@ for trained_model_version in load_models:
     for batch_idx, (images, masks, fname, original_size) in enumerate(dataloaders['test']):
 
         X = Variable(images).to(device) if use_cuda else images
-        logger.info('Batch {}: {}/{} images: {} masks: {} {}'.format(
+        logger.info(':::Model {}::: Batch {}: {}/{} images: {} masks: {} {}'.format(
+                    trained_model_version[:4],
                     (batch_idx+1),
                     (batch_idx+1) * len(images),
                     len(dataloaders['test'].dataset),
@@ -437,3 +457,15 @@ for trained_model_version in load_models:
         patch_img_name = fname[0]
         utils.save_image(y_hat[0], '{}/{}'.format(results_output_dir, patch_img_name))
         utils.save_image(TF.to_tensor(roi_image), '{}/{}'.format(results_roi_dir, patch_img_name))
+
+    print('=====================')
+    now = time.time()
+    elapsed_model_time = now - start_model_time
+    print('Time elapsed for model {}: {}'.format(trained_model_version[:4], timedelta(seconds=elapsed_model_time)))
+    mean_model_time = (now - start_time) / (i + 1)
+    estimated_time = mean_model_time * (len(load_models) - i - 1)
+    print('Mean model time: {}'.format(timedelta(seconds=mean_model_time)))
+    print('Estimated finish time: {}'.format(timedelta(seconds=estimated_time)))
+    start_model_time = now
+    print('Estimated finish date: {}'.format(datetime.fromtimestamp(now + estimated_time).strftime('%d/%m/%Y %H:%M:%S')))
+    print('=====================')

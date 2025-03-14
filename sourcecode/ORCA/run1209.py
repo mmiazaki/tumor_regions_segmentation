@@ -11,7 +11,7 @@ from sourcecode.Utils.orca_load_dataset_512x512 import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-#trained_model_version = "ORCA"
+#trained_model_version = "ORCA512"
 trained_model_version = None # starts the training from scratch
 
 ### Configurations ###

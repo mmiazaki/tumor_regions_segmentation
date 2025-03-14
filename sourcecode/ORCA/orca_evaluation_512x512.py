@@ -1,15 +1,16 @@
 import os
 import sys
+import time
 
 current_path = os.path.abspath('.')
 root_path = os.path.dirname(os.path.dirname(current_path))
 sys.path.append(root_path)
 
 from sourcecode.Utils.oscc_dataloader import *
-from sourcecode.Utils.train_utils import *
 from sourcecode.Utils.orca_load_dataset_512x512 import *
 from sourcecode.Utils.evaluation_utils import *
 
+from datetime import timedelta, datetime
 
 dataset_dir = "../../datasets/ORCA_512x512"
 dataset_dir_results = "../../datasets/ORCA_512x512"
@@ -374,8 +375,9 @@ load_models = [
     ]
 
 
+start_time = start_model_time = time.time()
 
-for trained_model_version in load_models:
+for i, trained_model_version in enumerate(load_models):
     print(':::::: {} ::::::'.format(trained_model_version))
 
     dataloaders = create_dataloader(samples_function=orca512_load_dataset,
@@ -451,3 +453,15 @@ for trained_model_version in load_models:
                  tn, fp, fn])
 
     calculate_avg_results(csv_file_path, csv_output, trained_model_version)
+
+    print('=====================')
+    now = time.time()
+    elapsed_model_time = now - start_model_time
+    print('Time elapsed for model {}: {}'.format(trained_model_version[:4], timedelta(seconds=elapsed_model_time)))
+    mean_model_time = (now - start_time) / (i + 1)
+    estimated_time = mean_model_time * (len(load_models) - i - 1)
+    print('Mean model time: {}'.format(timedelta(seconds=mean_model_time)))
+    print('Estimated finish time: {}'.format(timedelta(seconds=estimated_time)))
+    start_model_time = now
+    print('Estimated finish date: {}'.format(datetime.fromtimestamp(now + estimated_time).strftime('%d/%m/%Y %H:%M:%S')))
+    print('=====================')

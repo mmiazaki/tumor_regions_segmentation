@@ -7,43 +7,43 @@ sys.path.append(root_path)
 
 from sourcecode.Utils.oscc_dataloader import *
 from sourcecode.Utils.train_utils import *
-from sourcecode.Utils.orca_load_dataset_512x512 import *
+from sourcecode.Utils.orca_load_dataset import *
 
 ### Model ###
-# loads u-net based model to continue previous training (file name without extension .pth)
-trained_model_version = "1116_ORCA512_512x512_Epoch-66_Images-100_Batch-1_L1Loss_RAdam_inpainting_augmentation"
-#trained_model_version = None # starts the training from scratch
+# loads our u-net based model to continue previous training
+#trained_model_version = "ORCA_640x640_Epoch-400_Images-100_Batch-1_random_9_operations" # file name without extension .pth
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
-start_epoch = 67
-n_epochs = 400
+start_epoch = 1
+n_epochs = 100
 batch_size = 1
-patch_size = (512, 512)
+patch_size = (640, 640)
 color_model = "LAB"
 use_cuda = True
 
-dataset_name="1116_ORCA512" # prefix name used in the model file
-loss_function="L1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
-optimizer_algorithm="RAdam" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam, RAdam, RMSprop, Rprop, SGD
+dataset_name="4999_ORCA" # prefix name used in the model file
+loss_function="BCELoss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+optimizer_algorithm="Adam"
 
 # "no_augmentation"        : without any augmentation
 # "color_augmentation"     : color transfer augmentation
 # "inpainting_augmentation": inpainting augmentation
-# "standard"               : uses one augmentation each epoch, one by one following the list
-# "random"                 : all augmentations have 50% chance to be applied in the same epoch
-# "solo"                   : only uses the first available augmentation in the list (not None)
-augmentation_strategy = "inpainting_augmentation"
+# "standard"               : it uses all augmentations, sequentially one by one in each epoch
+# "random"                 : it randomly chooses if each augmentation will be used (50% chance for each augmentation)
+# "solo"                   : it just uses the first available augmentation in the list (not None)
+augmentation_strategy = "solo"
 
 augmentation = [None,
                 "horizontal_flip",
-                "vertical_flip",
-                "rotation",
-                "transpose",
+                #"vertical_flip",
+                #"rotation",
+                #"transpose",
                 #"elastic_transformation",
-                "grid_distortion",
-                "optical_distortion",
-                "color_transfer",
-                "inpainting",
+                #"grid_distortion",
+                #"optical_distortion",
+                #"color_transfer",
+                #"inpainting",
                 #'CLAHE',
                 #'Downscale',
                 #'Equalize',
@@ -114,7 +114,7 @@ augmentation = [None,
                 ]
 
 ### Directories and files ###
-dataset_dir = "../../datasets/ORCA_512x512"
+dataset_dir = "../../datasets/ORCA"
 model_dir = "../../models"
 result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".format(dataset_name, loss_function, optimizer_algorithm)
 
@@ -122,13 +122,13 @@ result_file_csv = dataset_dir + "/training/{}_training_accuracy_loss_{}_{}.csv".
 #model_saving_frequency = None          # No save
 #model_saving_frequency = ('all', 0)    # Save all
 #model_saving_frequency = ('every', 10) # Save every 10 epochs
-model_saving_frequency = ('last', 2)    # Save just the last 3 epochs
+model_saving_frequency = ('last', 3)    # Save just the last 3 epochs
 
 
 ################################################################################################################
 
 # load images
-dataloaders = create_dataloader(samples_function=orca512_load_dataset,
+dataloaders = create_dataloader(samples_function=orca_load_dataset,
                                 tile_size="{}x{}".format(patch_size[0], patch_size[1]),
                                 batch_size=batch_size,
                                 shuffle=False,
