@@ -75,7 +75,7 @@ class OSCCDataset(Dataset):
             if None in augmentation_operations:
                 augmentation_operations.remove(None)
 
-        elif 'standard' in self.augmentation_strategy:
+        elif 'standard' in self.augmentation_strategy or 'geometric' in self.augmentation_strategy or 'distortion' in self.augmentation_strategy:
 
             augmentations = self.augmentation.copy()
             if None in augmentations:

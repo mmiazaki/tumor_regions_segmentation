@@ -23,7 +23,7 @@ color_model = "LAB"
 use_cuda = True
 
 dataset_name="1190_ORCA512" # prefix name used in the model file
-loss_function="SmothL1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
+loss_function="SmoothL1Loss" # BCELoss, L1Loss, MSELoss, HuberLoss, SmoothL1Loss
 optimizer_algorithm="Adadelta" # Adam, Adadelta, Adagrad, AdamW, Adamax, ASGD, NAdam, RAdam, RMSprop, Rprop, SGD
 
 # "no_augmentation"        : without any augmentation

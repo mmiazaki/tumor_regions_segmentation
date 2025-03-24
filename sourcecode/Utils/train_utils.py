@@ -23,8 +23,8 @@ def get_loss_function(loss_function, device = "cuda"):
         case 'SmoothL1Loss':
             return nn.SmoothL1Loss().to(device)
         case _:
-            logger.info("Invalid Loss Function")
-            return None
+            logger.info("Invalid Loss Function: {}".format(loss_function))
+            exit(1)
     # Loss Functions that didn't work well (odd results):
     # - nn.PoissonNLLLoss().to(device)
     # - nn.HingeEmbeddingLoss().to(device) # target in [-1 1]
@@ -57,8 +57,8 @@ def get_optimizer(optimizer, model_parameters):
         case 'SGD':
             return optim.Adam(model_parameters)
         case _:
-            logger.info("Invalid Optimizer")
-            return None
+            logger.info("Invalid Optimizer: {}".format(optimizer))
+            exit(1)
 
 
 def train_model_with_validation(dataloaders,
@@ -194,8 +194,8 @@ def train_model_with_validation(dataloaders,
 
                     qtd_images = (batch_idx + 1) * len(data) if phase == 'train' else qtd_images
 
-#                if batch_idx == 0:
-#                    break
+                # if batch_idx == 0:
+                #     break
 
             epoch_loss[phase] = running_loss / len(dataloaders[phase].dataset)
             epoch_acc[phase] = running_accuracy / len(dataloaders[phase].dataset)
