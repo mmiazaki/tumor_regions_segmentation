@@ -32,3 +32,4 @@ __pycache__
 !/datasets/OCDC/*.csv
 !/datasets/CAMELYON16/*.csv
 nohup.out
+*.swp
