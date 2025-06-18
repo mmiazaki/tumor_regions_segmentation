@@ -11,18 +11,18 @@ from sourcecode.Utils.orca_load_dataset_512x512 import *
 
 ### Model ###
 # loads u-net based model to continue previous training (file name without extension .pth)
-trained_model_version = "1595_ORCA512_512x512_Epoch-367_Images-100_Batch-1_MSELoss_Adam_Perspective"
-#trained_model_version = None # starts the training from scratch
+#trained_model_version = "ORCA512"
+trained_model_version = None # starts the training from scratch
 
 ### Configurations ###
-start_epoch = 368
+start_epoch = 1
 n_epochs    = 400
 batch_size  = 1
 patch_size  = (512, 512)
 color_model = "LAB"
 use_cuda    = True
 
-first_fname_id = 1595
+first_fname_id = 1695
 dataset        = "ORCA512"
 
 #list_loss      = ['BCELoss', 'L1Loss', 'MSELoss', 'HuberLoss', 'SmoothL1Loss']
@@ -30,11 +30,24 @@ dataset        = "ORCA512"
 #list_strategy  = ['no_augmentation', 'color_augmentation', 'inpainting_augmentation', 'geometric', 'distortion',
 #                  'standard', 'random', 'solo']
 
-list_loss      = ['MSELoss']
+list_loss      = ['HuberLoss']
 list_optimizer = ['Adam']
 list_strategy  = ['solo']
 
-all_augmentations = ['Perspective']
+all_augmentations = ['PiecewiseAffine',
+                     'RandomGridShuffle',
+                     'XYMasking',
+                     ##'Normalize',
+                     ##'LongestMaxSize',
+                     ##'MixUp',
+                     ##'PadIfNeeded',
+                     ##'RandomCropFromBorders',
+                     ##'RandomScale',
+                     ##'SmallestMaxSize',
+                     ##'FDA',
+                     ##'PixelDistributionAdaptation',
+                     ##'TemplateTransform',
+                    ]
 
 
 ### Directories and files ###

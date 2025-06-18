@@ -30,7 +30,7 @@ dataset        = "ORCA512"
 #list_strategy  = ['no_augmentation', 'color_augmentation', 'inpainting_augmentation', 'geometric', 'distortion',
 #                  'standard', 'random', 'solo']
 
-list_loss      = ['L1Loss']
+list_loss      = ['HuberLoss']
 list_optimizer = ['Adam']
 list_strategy  = ['solo']
 
