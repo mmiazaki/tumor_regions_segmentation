@@ -22,7 +22,7 @@ patch_size  = (512, 512)
 color_model = "LAB"
 use_cuda    = True
 
-first_fname_id = 1932
+first_fname_id = 1860
 dataset        = "ORCA512"
 
 #list_loss      = ['BCELoss', 'L1Loss', 'MSELoss', 'HuberLoss', 'SmoothL1Loss']
@@ -30,86 +30,16 @@ dataset        = "ORCA512"
 #list_strategy  = ['no_augmentation', 'color_augmentation', 'inpainting_augmentation', 'geometric', 'distortion',
 #                  'standard', 'random', 'solo']
 
-list_loss      = ['HuberLoss']
+list_loss      = ['L1Loss']
 list_optimizer = ['Adadelta']
 list_strategy  = ['solo']
 
-all_augmentations = ["horizontal_flip",
-                     "vertical_flip",
-                     "rotation",
-                     "transpose",
-                     "elastic_transformation",
-                     "grid_distortion",
-                     "optical_distortion",
-                     "color_transfer",
-                     "inpainting",
-                     'CLAHE',
-                     'Downscale',
-                     'Equalize',
-                     'HueSaturationValue',
-                     'ISONoise',
-                     'MultiplicativeNoise',
-                     'RandomGravel',
-                     'RingingOvershoot',
-                     'Sharpen',
-                     'Blur',
-                     'Defocus',
-                     'GaussianBlur',
-                     'GlassBlur',
-                     'MedianBlur',
-                     'MotionBlur',
-                     'ZoomBlur',
-                     'Morphological',
-                     'PixelDropout',
-                     'Rotate',
-                     'SafeRotate',
-                     'Perspective',
-                     'ShiftScaleRotate',
-                     'AdvancedBlur',
-                     'ChannelDropout',
-                     'ChannelShuffle',
-                     'ChromaticAberration',
-                     'ColorJitter',
-                     'Emboss',
-                     'FancyPCA',
-                     'GaussNoise',
-                     'ImageCompression',
-                     'InvertImg',
-                     'PlanckianJitter',
-                     'Posterize',
-                     'RGBShift',
-                     'RandomBrightnessContrast',
-                     'RandomFog',
-                     'RandomGamma',
-                     'RandomRain',
-                     'RandomShadow',
-                     'RandomSnow',
-                     'RandomSunFlare',
-                     'RandomToneCurve',
-                     'Solarize',
-                     'Spatter',
-                     'Superpixels',
-                     'ToGray',
-                     'ToSepia',
-                     'UnsharpMask',
-                     'Affine',
-                     'CoarseDropout',
-                     'D4',
+all_augmentations = ['D4',
                      'GridDropout',
                      'Lambda',
                      'PiecewiseAffine',
                      'RandomGridShuffle',
                      'XYMasking',
-                     ##'Normalize',
-                     ##'LongestMaxSize',
-                     ##'MixUp',
-                     ##'PadIfNeeded',
-                     ##'RandomCropFromBorders',
-                     ##'RandomScale',
-                     ##'SmallestMaxSize',
-                     ##'FDA',
-                     ##'PixelDistributionAdaptation',
-                     ##'TemplateTransform',
                     ]
 
 
@@ -121,7 +51,7 @@ model_dir = "../../models"
 #model_saving_frequency = None          # No save
 #model_saving_frequency = ('all', 0)    # Save all
 #model_saving_frequency = ('every', 10) # Save every 10 epochs
-model_saving_frequency = ('last', 2)    # Save just the last 3 epochs
+model_saving_frequency = ('last', 2)    # Save just the last 2 epochs
 
 
 ################################################################################################################

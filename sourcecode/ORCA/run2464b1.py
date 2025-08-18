@@ -22,7 +22,7 @@ patch_size  = (512, 512)
 color_model = "LAB"
 use_cuda    = True
 
-first_fname_id = 1998
+first_fname_id = 2464
 dataset        = "ORCA512"
 
 #list_loss      = ['BCELoss', 'L1Loss', 'MSELoss', 'HuberLoss', 'SmoothL1Loss']
@@ -30,8 +30,8 @@ dataset        = "ORCA512"
 #list_strategy  = ['no_augmentation', 'color_augmentation', 'inpainting_augmentation', 'geometric', 'distortion',
 #                  'standard', 'random', 'solo']
 
-list_loss      = ['SmoothL1Loss']
-list_optimizer = ['Adadelta']
+list_loss      = ['BCELoss']
+list_optimizer = ['Adagrad']
 list_strategy  = ['solo']
 
 all_augmentations = ["horizontal_flip",
