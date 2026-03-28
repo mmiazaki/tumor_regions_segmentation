@@ -22,7 +22,7 @@ patch_size  = (512, 512)
 color_model = "LAB"
 use_cuda    = True
 
-first_fname_id = 3176
+first_fname_id = 3195
 dataset        = "ORCA512"
 
 #list_loss      = ['BCELoss', 'L1Loss', 'MSELoss', 'HuberLoss', 'SmoothL1Loss']
@@ -35,25 +35,6 @@ list_optimizer = ['Adamax']
 list_strategy  = ['solo']
 
 all_augmentations = [
-                     'RandomBrightnessContrast',
-                     'RandomFog',
-                     'RandomGamma',
-                     'RandomRain',
-                     'RandomShadow',
-                     'RandomSnow',
-                     'RandomSunFlare',
-                     'RandomToneCurve',
-                     'Solarize',
-                     'Spatter',
-                     'Superpixels',
-                     'ToGray',
-                     'ToSepia',
-                     'UnsharpMask',
-                     'Affine',
-                     'CoarseDropout',
-                     'D4',
-                     'GridDropout',
-                     'Lambda',
                      'PiecewiseAffine',
                      'RandomGridShuffle',
                      'XYMasking',

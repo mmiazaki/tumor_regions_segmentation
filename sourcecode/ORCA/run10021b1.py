@@ -22,7 +22,7 @@ patch_size  = (512, 512)
 color_model = "LAB"
 use_cuda    = True
 
-first_fname_id = 3129
+first_fname_id = 10021
 dataset        = "ORCA512"
 
 #list_loss      = ['BCELoss', 'L1Loss', 'MSELoss', 'HuberLoss', 'SmoothL1Loss']
@@ -30,11 +30,74 @@ dataset        = "ORCA512"
 #list_strategy  = ['no_augmentation', 'color_augmentation', 'inpainting_augmentation', 'geometric', 'distortion',
 #                  'standard', 'random', 'solo']
 
-list_loss      = ['MSELoss']
-list_optimizer = ['Adamax']
-list_strategy  = ['solo']
+list_loss      = ['HuberLoss']
+list_optimizer = ['Adam']
+list_strategy  = ['no_augmentation', 'color_augmentation', 'inpainting_augmentation', 'geometric', 'distortion',
+                  'standard', 'random']
 
-all_augmentations = [
+all_augmentations = ["horizontal_flip",
+                     "vertical_flip",
+                     "rotation",
+                     "transpose",
+                     "elastic_transformation",
+                     "grid_distortion",
+                     "optical_distortion",
+                     "color_transfer",
+                     "inpainting",
+                     'CLAHE',
+                     'Downscale',
+                     'Equalize',
+                     'HueSaturationValue',
+                     'ISONoise',
+                     'MultiplicativeNoise',
+                     'RandomGravel',
+                     'RingingOvershoot',
+                     'Sharpen',
+                     'Blur',
+                     'Defocus',
+                     'GaussianBlur',
+                     'GlassBlur',
+                     'MedianBlur',
+                     'MotionBlur',
+                     'ZoomBlur',
+                     'Morphological',
+                     'PixelDropout',
+                     'Rotate',
+                     'SafeRotate',
+                     'Perspective',
+                     'ShiftScaleRotate',
+                     'AdvancedBlur',
+                     'ChannelDropout',
+                     'ChannelShuffle',
+                     'ChromaticAberration',
+                     'ColorJitter',
+                     'Emboss',
+                     'FancyPCA',
+                     'GaussNoise',
+                     'ImageCompression',
+                     'InvertImg',
+                     'PlanckianJitter',
+                     'Posterize',
+                     'RGBShift',
+                     'RandomBrightnessContrast',
+                     'RandomFog',
+                     'RandomGamma',
+                     'RandomRain',
+                     'RandomShadow',
+                     'RandomSnow',
+                     'RandomSunFlare',
+                     'RandomToneCurve',
+                     'Solarize',
+                     'Spatter',
+                     'Superpixels',
+                     'ToGray',
+                     'ToSepia',
+                     'UnsharpMask',
+                     'Affine',
+                     'CoarseDropout',
+                     'D4',
+                     'GridDropout',
+                     'Lambda',
                      'PiecewiseAffine',
                      'RandomGridShuffle',
                      'XYMasking',
